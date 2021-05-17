@@ -48,4 +48,5 @@ public class Store {
     private String phone;
     private String addressNumber;
     private String neighbourhood;
+    private Float rating;
 }
