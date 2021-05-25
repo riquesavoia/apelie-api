@@ -39,6 +39,7 @@ public class Store {
     private String facebookLink;
     private String youtubeLink;
     private String bannerUrl;
+    private String logoUrl;
     private String theme;
     private String street;
     private String city;
@@ -49,4 +50,5 @@ public class Store {
     private String addressNumber;
     private String neighbourhood;
     private Float rating;
+    private String description;
 }

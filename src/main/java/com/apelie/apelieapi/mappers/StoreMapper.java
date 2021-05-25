@@ -31,7 +31,9 @@ public class StoreMapper {
                 store.getPhone(),
                 store.getAddressNumber(),
                 store.getNeighbourhood(),
-                store.getRating()
+                store.getRating(),
+                store.getDescription(),
+                store.getLogoUrl()
         );
     }
 
