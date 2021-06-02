@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class BuyOrder {
     private Long buyOrderId;
     private String trackingCode;
     private String status;
-    private String createdAt;
+    private Date createdAt;
 
     @ManyToOne
     @JoinColumn(name="user_id")

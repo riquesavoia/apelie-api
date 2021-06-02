@@ -18,9 +18,11 @@ public class Product {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long productId;
     private float price;
+    @Column(length = 50)
     private String name;
     private String description;
     private int quantity;
+    @Column(length = 40)
     private String category;
 
     @ManyToOne
