@@ -15,7 +15,7 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long productId;
     private float price;
     @Column(length = 50)
