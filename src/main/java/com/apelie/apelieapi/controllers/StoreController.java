@@ -1,7 +1,7 @@
 package com.apelie.apelieapi.controllers;
 
+import com.apelie.apelieapi.dto.store.CreateStoreDTO;
 import com.apelie.apelieapi.dto.store.StoreResponseDTO;
-import com.apelie.apelieapi.dto.user.UserResponseDto;
 import com.apelie.apelieapi.mappers.StoreMapper;
 import com.apelie.apelieapi.services.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,5 +44,11 @@ public class StoreController {
     @ResponseStatus(HttpStatus.OK)
     public StoreResponseDTO getStoreById(@PathVariable Long id) {
         return StoreMapper.toDto(storeService.getStoreById(id));
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@Valid @RequestBody CreateStoreDTO createStoreDTO) {
+        storeService.createStore(createStoreDTO);
     }
 }

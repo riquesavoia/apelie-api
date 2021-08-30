@@ -14,15 +14,15 @@ public class StoreMapper {
         return new StoreResponseDTO(
                 store.getStoreId(),
                 UserMapper.toDto(store.getOwner()),
-                store.getTwitterLink(),
-                store.getCategory(),
-                store.getPaymentMethods(),
-                store.getInstagramLink(),
+                store.getTwitterAccount(),
+                store.getCategoryList(),
+                store.getInstagramAccount(),
                 store.getState(),
-                store.getFacebookLink(),
-                store.getYoutubeLink(),
+                store.getFacebookAccount(),
+                store.getYoutubeAccount(),
                 store.getBannerUrl(),
-                store.getTheme(),
+                store.getPrimaryColor(),
+                store.getSecondaryColor(),
                 store.getStreet(),
                 store.getCity(),
                 store.getCep(),
@@ -32,12 +32,31 @@ public class StoreMapper {
                 store.getAddressNumber(),
                 store.getNeighbourhood(),
                 store.getRating(),
-                store.getDescription(),
-                store.getLogoUrl()
+                store.getLogoUrl(),
+                store.getDescription()
         );
     }
 
     public static Store toEntity(CreateStoreDTO createStoreDTO) {
-        return null;
+        Store store = new Store();
+        store.setEmail(createStoreDTO.getEmail());
+        store.setCep(createStoreDTO.getCep());
+        store.setState(createStoreDTO.getState());
+        store.setNeighbourhood(createStoreDTO.getNeighbourhood());
+        store.setInstagramAccount(createStoreDTO.getInstagramAccount());
+        store.setYoutubeAccount(createStoreDTO.getYoutubeAccount());
+        store.setCity(createStoreDTO.getCity());
+        store.setFacebookAccount(createStoreDTO.getFacebookAccount());
+        store.setDescription(createStoreDTO.getDescription());
+        store.setAddressNumber(createStoreDTO.getAddressNumber());
+        store.setStreet(createStoreDTO.getStreet());
+        store.setPrimaryColor(createStoreDTO.getPrimaryColor());
+        store.setSecondaryColor(createStoreDTO.getSecondaryColor());
+        store.setPhone(createStoreDTO.getPhone());
+        store.setTwitterAccount(createStoreDTO.getTwitterAccount());
+        store.setName(createStoreDTO.getName());
+        store.setCategoryList(createStoreDTO.getCategories());
+
+        return store;
     }
 }
