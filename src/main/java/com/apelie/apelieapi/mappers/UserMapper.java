@@ -12,16 +12,8 @@ public class UserMapper {
         UserResponseDto userResponseDto = new UserResponseDto(
                 user.getUserId(),
                 user.getFullName(),
-                user.getCity(),
                 user.getEmail(),
-                user.getStreet(),
-                user.getState(),
-                user.getCep(),
-                user.getAddressNumber(),
-                user.getNeighbourhood(),
-                user.getGender(),
                 user.getCpf(),
-                user.getBirthDate() != null ? user.getBirthDate().toString() : null,
                 user.getPhotoUrl()
         );
 

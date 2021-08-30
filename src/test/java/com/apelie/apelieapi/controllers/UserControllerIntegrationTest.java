@@ -31,7 +31,6 @@ class UserControllerIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         CreateUserDto user = new CreateUserDto();
         user.setEmail("test@test.com");
-        user.setGender("genderTest");
         user.setFullName("FullName Test");
         user.setPassword("testpassword123");
 
@@ -47,7 +46,6 @@ class UserControllerIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         CreateUserDto user = new CreateUserDto();
         user.setEmail("test@");
-        user.setGender("genderTest");
         user.setFullName("FullName Test");
         user.setPassword("testpassword123");
 
@@ -62,7 +60,6 @@ class UserControllerIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         CreateUserDto user = new CreateUserDto();
         user.setEmail("test@test.com");
-        user.setGender("genderTest");
         user.setFullName("   ");
         user.setPassword("testpassword123");
 
@@ -77,7 +74,6 @@ class UserControllerIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         CreateUserDto user = new CreateUserDto();
         user.setEmail("test@test.com");
-        user.setGender("genderTest");
         user.setFullName("Fullname Test");
         user.setPassword("12345");
 
