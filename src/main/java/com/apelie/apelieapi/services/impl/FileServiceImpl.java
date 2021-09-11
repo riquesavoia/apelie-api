@@ -13,4 +13,6 @@ public class FileServiceImpl implements FileService {
     public String uploadFile(MultipartFile file) {
         return "link.com/image.png";
     }
+
+    public void deleteImageByUrl(String url) { return; }
 }

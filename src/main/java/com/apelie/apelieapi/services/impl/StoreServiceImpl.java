@@ -11,6 +11,8 @@ import com.apelie.apelieapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import java.security.AccessControlException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,8 +43,12 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public void createStore(CreateStoreDTO createStoreDTO) {
-        Store store = StoreMapper.toEntity(createStoreDTO);
         User owner = userService.getLoggedUser();
+        if (storeRepository.findByOwnerUserId(owner.getUserId()) != null) {
+            throw new EntityExistsException("This user already has a store");
+        }
+
+        Store store = StoreMapper.toEntity(createStoreDTO);
         store.setOwner(owner);
 
         String bannerUrl = fileService.uploadFile(createStoreDTO.getBannerImage());
@@ -52,5 +58,32 @@ public class StoreServiceImpl implements StoreService {
         store.setLogoUrl(logoUrl);
 
         storeRepository.save(store);
+    }
+
+    @Override
+    public void updateStore(CreateStoreDTO createStoreDTO) {
+        User storeOwner = userService.getLoggedUser();
+
+        Store currentStore = storeRepository
+                .findByOwnerUserId(storeOwner.getUserId())
+                .orElseThrow(() -> new NoSuchElementException("You don't have a store to update"));
+
+        if (currentStore.getOwner().getUserId() != storeOwner.getUserId()) {
+            throw new AccessControlException("You don't have permission to edit this store");
+        }
+
+        Store updatedStore = StoreMapper.toEntity(createStoreDTO, currentStore);
+
+        if (createStoreDTO.getBannerImage() != null) {
+            this.fileService.deleteImageByUrl(currentStore.getBannerUrl());
+            updatedStore.setBannerUrl(this.fileService.uploadFile(createStoreDTO.getBannerImage()));
+        }
+
+        if (createStoreDTO.getLogoImage() != null) {
+            this.fileService.deleteImageByUrl(currentStore.getLogoUrl());
+            updatedStore.setLogoUrl(this.fileService.uploadFile(createStoreDTO.getLogoImage()));
+        }
+
+        storeRepository.save(updatedStore);
     }
 }

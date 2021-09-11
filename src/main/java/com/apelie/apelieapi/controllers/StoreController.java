@@ -1,8 +1,10 @@
 package com.apelie.apelieapi.controllers;
 
+import com.apelie.apelieapi.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.dto.store.CreateStoreDTO;
 import com.apelie.apelieapi.dto.store.StoreResponseDTO;
 import com.apelie.apelieapi.mappers.StoreMapper;
+import com.apelie.apelieapi.services.ProductService;
 import com.apelie.apelieapi.services.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -18,11 +20,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path="/store")
+@RequestMapping(path="/stores")
 public class StoreController {
 
     @Autowired
     private StoreService storeService;
+
+    @Autowired
+    private ProductService productService;
 
     @Operation(summary = "Get all stores", responses = {
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = StoreResponseDTO.class))))
@@ -46,9 +51,21 @@ public class StoreController {
         return StoreMapper.toDto(storeService.getStoreById(id));
     }
 
+    @PostMapping("/{storeId}/products")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createProduct(@Valid @RequestBody CreateProductDTO createProductDTO, @PathVariable Long storeId) {
+        productService.createProduct(createProductDTO, storeId);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@Valid @RequestBody CreateStoreDTO createStoreDTO) {
+    public void createStore(@Valid @RequestBody CreateStoreDTO createStoreDTO) {
         storeService.createStore(createStoreDTO);
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updateStore(@Valid @RequestBody CreateStoreDTO createStoreDTO) {
+        storeService.updateStore(createStoreDTO);
     }
 }

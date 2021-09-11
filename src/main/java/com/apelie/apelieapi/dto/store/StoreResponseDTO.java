@@ -1,6 +1,9 @@
 package com.apelie.apelieapi.dto.store;
 
+import com.apelie.apelieapi.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.dto.user.UserResponseDto;
+import com.apelie.apelieapi.models.Product;
+import com.apelie.apelieapi.models.ProductImage;
 import com.apelie.apelieapi.models.enums.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +19,7 @@ public class StoreResponseDTO {
     private UserResponseDto owner;
     private String twitterAccount;
     private List<Category> category;
+    private List<ProductResponseDTO> products;
     private String instagramAccount;
     private String state;
     private String facebookAccount;

@@ -16,4 +16,8 @@ public class ProductImage {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long product_image_id;
     private String url;
+
+    public ProductImage(String url) {
+        this.url = url;
+    }
 }

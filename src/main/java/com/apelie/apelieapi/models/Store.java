@@ -4,6 +4,10 @@ import com.apelie.apelieapi.models.enums.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,8 +32,14 @@ public class Store {
     @ElementCollection(targetClass = Category.class)
     @CollectionTable(name = "store_category", joinColumns = @JoinColumn(name = "store_id"))
     @Column(name = "category", nullable = false)
+    @JoinColumn(name = "store_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @Cascade(value={CascadeType.ALL})
     @Enumerated(EnumType.STRING)
     private List<Category> categoryList;
+
+    @OneToMany(mappedBy = "store")
+    private List<Product> productList;
 
     @Column(length = 50)
     private String instagramAccount;
@@ -74,7 +84,7 @@ public class Store {
     @Column(length = 10)
     private String addressNumber;
 
-    @Column(length = 10)
+    @Column(length = 50)
     private String neighbourhood;
 
     private Float rating;

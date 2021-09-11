@@ -11,4 +11,6 @@ public interface StoreService {
     Store getStoreById(Long id);
 
     void createStore(CreateStoreDTO createStoreDTO);
+
+    void updateStore(CreateStoreDTO createStoreDTO);
 }
