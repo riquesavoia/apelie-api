@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.persistence.EntityExistsException;
 import java.io.IOException;
+import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,6 +34,11 @@ public class ExceptionResponseHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = NoSuchElementException.class)
     public ResponseEntity<GeneralExceptionResponse> handleNoSuchElementException(Exception ex) throws IOException {
         return new ResponseEntity(new GeneralExceptionResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = AccessControlException.class)
+    public ResponseEntity<GeneralExceptionResponse> handleAccessControlException(Exception ex) throws IOException {
+        return new ResponseEntity(new GeneralExceptionResponse(HttpStatus.FORBIDDEN.value(), ex.getMessage()), HttpStatus.FORBIDDEN);
     }
 
     @Override

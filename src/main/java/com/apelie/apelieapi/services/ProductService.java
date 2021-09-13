@@ -12,4 +12,11 @@ public interface ProductService {
      * @param storeId
      */
     void createProduct(CreateProductDTO createProductDTO, Long storeId);
+
+    /**
+     * Deletes a given product
+     *
+     * @param productId
+     */
+    void deleteProduct(Long productId);
 }

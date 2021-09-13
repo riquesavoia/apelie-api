@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -31,6 +32,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Override
+    public void deleteProduct(Long productId) {
+        if (productId == null) {
+            throw new RuntimeException("ProductID cannot be null");
+        }
+
+        Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+
+        if (product.getStore().getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
+            throw new AccessControlException("You don't have permission to remove this product");
+        }
+
+        productRepository.delete(product);
+    }
 
     @Override
     public void createProduct(CreateProductDTO createProductDTO, Long storeId) {

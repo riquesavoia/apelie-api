@@ -13,6 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateProductDTO {
 
+    @Size(max=40, message = "Name must have at most 40 characters")
+    @Size(min=4, message = "Name must have at least 4 characters")
     @NotNull(message = "Name cannot be null")
     private String name;
 
