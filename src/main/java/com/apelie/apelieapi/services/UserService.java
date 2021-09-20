@@ -4,7 +4,17 @@ import com.apelie.apelieapi.dto.user.CreateUserDto;
 import com.apelie.apelieapi.models.User;
 
 public interface UserService {
+    /**
+     * Creates a new user
+     *
+     * @param createUserDto
+     */
     void createUser(CreateUserDto createUserDto);
 
+    /**
+     * Gets current logged user
+     *
+     * @return
+     */
     User getLoggedUser();
 }

@@ -19,7 +19,7 @@ public class User {
     @Column(length = 50)
     private String fullName;
     private String password;
-    @Column(length = 40)
+    @Column(length = 40, unique=true)
     private String email;
     @Column(length = 15)
     private String cpf;
