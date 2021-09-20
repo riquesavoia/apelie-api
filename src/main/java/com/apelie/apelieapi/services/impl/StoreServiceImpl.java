@@ -44,7 +44,8 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void createStore(CreateStoreDTO createStoreDTO) {
         User owner = userService.getLoggedUser();
-        if (storeRepository.findByOwnerUserId(owner.getUserId()) != null) {
+
+        if (storeRepository.findByOwnerUserId(owner.getUserId()).isPresent()) {
             throw new EntityExistsException("This user already has a store");
         }
 

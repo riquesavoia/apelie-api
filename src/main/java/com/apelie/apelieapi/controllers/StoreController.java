@@ -64,7 +64,7 @@ public class StoreController {
     }
 
     @PutMapping
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStore(@Valid @RequestBody CreateStoreDTO createStoreDTO) {
         storeService.updateStore(createStoreDTO);
     }
