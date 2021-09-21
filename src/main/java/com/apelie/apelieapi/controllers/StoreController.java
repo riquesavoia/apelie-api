@@ -1,8 +1,11 @@
 package com.apelie.apelieapi.controllers;
 
+import com.apelie.apelieapi.dto.exception.BadRequestResponse;
+import com.apelie.apelieapi.dto.exception.GeneralExceptionResponse;
 import com.apelie.apelieapi.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.dto.store.CreateStoreDTO;
 import com.apelie.apelieapi.dto.store.StoreResponseDTO;
+import com.apelie.apelieapi.dto.user.CreateUserDto;
 import com.apelie.apelieapi.mappers.StoreMapper;
 import com.apelie.apelieapi.services.ProductService;
 import com.apelie.apelieapi.services.StoreService;
@@ -51,18 +54,32 @@ public class StoreController {
         return StoreMapper.toDto(storeService.getStoreById(id));
     }
 
+    @Operation(summary = "Create new product", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateProductDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = GeneralExceptionResponse.class)))
+    })
     @PostMapping("/{storeId}/products")
     @ResponseStatus(HttpStatus.CREATED)
     public void createProduct(@Valid @RequestBody CreateProductDTO createProductDTO, @PathVariable Long storeId) {
         productService.createProduct(createProductDTO, storeId);
     }
 
+    @Operation(summary = "Create new store", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateStoreDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestResponse.class)))
+    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createStore(@Valid @RequestBody CreateStoreDTO createStoreDTO) {
         storeService.createStore(createStoreDTO);
     }
 
+    @Operation(summary = "Update a store", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "204", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateStoreDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User doesn't have a store", content = @Content(mediaType = "application/json", schema = @Schema(implementation = GeneralExceptionResponse.class)))
+    })
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStore(@Valid @RequestBody CreateStoreDTO createStoreDTO) {
