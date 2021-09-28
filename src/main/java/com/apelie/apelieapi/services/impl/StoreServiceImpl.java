@@ -9,6 +9,7 @@ import com.apelie.apelieapi.services.FileService;
 import com.apelie.apelieapi.services.StoreService;
 import com.apelie.apelieapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -29,9 +30,8 @@ public class StoreServiceImpl implements StoreService {
     private FileService fileService;
 
     @Override
-    public List<Store> getAllStores() {
-        List<Store> list = storeRepository.findAll();
-        return list;
+    public List<Store> getAllStores(Specification<Store> specifications) {
+        return storeRepository.findAll(specifications);
     }
 
     @Override

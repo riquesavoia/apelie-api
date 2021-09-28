@@ -1,7 +1,7 @@
 package com.apelie.apelieapi.controllers;
 
 import com.apelie.apelieapi.models.Store;
-import com.apelie.apelieapi.models.enums.Category;
+import com.apelie.apelieapi.models.enums.StoreCategory;
 import com.apelie.apelieapi.repositories.StoreRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -36,8 +36,8 @@ public class StoreControllerIntegrationTest {
     @Test
     public void givenStore_whenGetStores_thenStatus200() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        List<Category> categoryList = new ArrayList<>();
-        categoryList.add(Category.FOOD);
+        List<StoreCategory> categoryList = new ArrayList<>();
+        categoryList.add(StoreCategory.FOOD);
 
         Store store = new Store();
         store.setAddressNumber("100");
@@ -65,8 +65,8 @@ public class StoreControllerIntegrationTest {
     @Test
     public void givenStore_whenGetStoreById_thenStatus200() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        List<Category> categoryList = new ArrayList<>();
-        categoryList.add(Category.FOOD);
+        List<StoreCategory> categoryList = new ArrayList<>();
+        categoryList.add(StoreCategory.FOOD);
 
         Store store = new Store();
         store.setAddressNumber("100");

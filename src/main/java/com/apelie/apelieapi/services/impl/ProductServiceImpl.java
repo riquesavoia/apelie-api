@@ -49,6 +49,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getAllProductsByStore(Long storeId) {
+        if (storeId == null) {
+            throw new RuntimeException("StoreID cannot be null");
+        }
+
+        Store store = storeService.getStoreById(storeId);
+
+        if (store == null) {
+            throw new NoSuchElementException("Store not found");
+        }
+
+        return productRepository.findAllByStoreStoreId(storeId);
+    }
+
+    @Override
     public void createProduct(CreateProductDTO createProductDTO, Long storeId) {
         if (storeId == null) {
             throw new RuntimeException("StoreID cannot be null");

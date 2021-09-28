@@ -1,7 +1,7 @@
 package com.apelie.apelieapi.services.impl;
 
 import com.apelie.apelieapi.models.Store;
-import com.apelie.apelieapi.models.enums.Category;
+import com.apelie.apelieapi.models.enums.StoreCategory;
 import com.apelie.apelieapi.repositories.StoreRepository;
 import com.apelie.apelieapi.services.StoreService;
 import org.junit.Before;
@@ -35,8 +35,8 @@ public class StoreServiceImplTest {
     public void setUp() {
         Store store = new Store();
         Store store2 = new Store();
-        List<Category> categoryList = new ArrayList<>();
-        categoryList.add(Category.FOOD);
+        List<StoreCategory> categoryList = new ArrayList<>();
+        categoryList.add(StoreCategory.FOOD);
 
         store.setStoreId(Long.valueOf(0));
         store.setAddressNumber("100");
@@ -87,7 +87,7 @@ public class StoreServiceImplTest {
 
     @Test
     public void whenValidStores_thenStoresShouldBeFound() {
-        List<Store> stores = storeService.getAllStores();
+        List<Store> stores = storeService.getAllStores(null);
 
         assertThat(stores.size()).isEqualTo(2);
     }

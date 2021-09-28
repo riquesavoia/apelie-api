@@ -20,25 +20,14 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/cart")
-public class CartController {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CartService cartService;
+public interface CartController {
 
     @Operation(summary = "Gets all products from logged user cart", responses = {
             @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json"))
     })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductResponseDTO> getCart() {
-        return cartService.getProducts(userService.getLoggedUser().getUserId())
-                .stream()
-                .map(ProductMapper::toDto)
-                .collect(Collectors.toList());
-    }
+    public List<ProductResponseDTO> getCart();
 
     @Operation(summary = "Adds a product into logged user cart", responses = {
             @ApiResponse(description = "Successful Operation", responseCode = "201", content = @Content(mediaType = "application/json")),
@@ -47,9 +36,7 @@ public class CartController {
     })
     @PostMapping("/{productId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProductInCart(@PathVariable Long productId) {
-        cartService.addProduct(productId, userService.getLoggedUser().getUserId());
-    }
+    public void addProductInCart(@PathVariable Long productId);
 
     @Operation(summary = "Remove a product from logged user cart", responses = {
             @ApiResponse(description = "Successful Operation", responseCode = "201", content = @Content(mediaType = "application/json")),
@@ -57,7 +44,5 @@ public class CartController {
     })
     @DeleteMapping("/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeProductInCart(@PathVariable Long productId) {
-        cartService.removeProduct(productId, userService.getLoggedUser().getUserId());
-    }
+    public void removeProductInCart(@PathVariable Long productId);
 }

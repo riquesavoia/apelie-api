@@ -17,10 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path="/users")
-public class UserController {
-
-    @Autowired
-    private UserService userService;
+public interface UserController {
 
     @Operation(summary = "Create new user", responses = {
             @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateUserDto.class))),
@@ -28,9 +25,7 @@ public class UserController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@Valid @RequestBody CreateUserDto createUserRequest) {
-        this.userService.createUser(createUserRequest);
-    }
+    public void create(@Valid @RequestBody CreateUserDto createUserRequest);
 
     @Operation(summary = "Get information about logged user", responses = {
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
@@ -39,7 +34,5 @@ public class UserController {
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserResponseDto getLoggedUser() {
-        return UserMapper.toDto(this.userService.getLoggedUser());
-    }
+    public UserResponseDto getLoggedUser();
 }

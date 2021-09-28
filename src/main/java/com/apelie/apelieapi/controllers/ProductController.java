@@ -17,10 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path="/products")
-public class ProductController {
-
-    @Autowired
-    private ProductService productService;
+public interface ProductController {
 
     @Operation(summary = "Delete a product", responses = {
             @ApiResponse(description = "Successful Operation", responseCode = "204", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateStoreDTO.class))),
@@ -29,13 +26,9 @@ public class ProductController {
     })
     @DeleteMapping("/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable Long productId) {
-        productService.deleteProduct(productId);
-    }
+    public void deleteProduct(@PathVariable Long productId);
 
     @PutMapping("/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProduct(@Valid @RequestBody CreateProductDTO createProductDTO, @PathVariable Long productId) {
-        // productService.updateProduct(createProductDTO, productId);
-    }
+    public void updateProduct(@Valid @RequestBody CreateProductDTO createProductDTO, @PathVariable Long productId);
 }

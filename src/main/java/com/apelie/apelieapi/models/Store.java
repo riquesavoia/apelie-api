@@ -1,6 +1,6 @@
 package com.apelie.apelieapi.models;
 
-import com.apelie.apelieapi.models.enums.Category;
+import com.apelie.apelieapi.models.enums.StoreCategory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,14 +29,14 @@ public class Store {
     @Column(length = 50)
     private String twitterAccount;
 
-    @ElementCollection(targetClass = Category.class)
+    @ElementCollection(targetClass = StoreCategory.class)
     @CollectionTable(name = "store_category", joinColumns = @JoinColumn(name = "store_id"))
     @Column(name = "category", nullable = false)
     @JoinColumn(name = "store_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Cascade(value={CascadeType.ALL})
     @Enumerated(EnumType.STRING)
-    private List<Category> categoryList;
+    private List<StoreCategory> categoryList;
 
     @OneToMany(mappedBy = "store")
     private List<Product> productList;
