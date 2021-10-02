@@ -71,6 +71,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getProductById(Long productId) {
+        return productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+    }
+
+    @Override
     public void createProduct(CreateProductDTO createProductDTO, Long storeId) {
         if (storeId == null) {
             throw new RuntimeException("StoreID cannot be null");

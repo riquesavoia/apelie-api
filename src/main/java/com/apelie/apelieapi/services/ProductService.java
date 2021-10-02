@@ -27,4 +27,12 @@ public interface ProductService {
      * @return
      */
     List<Product> getAllProductsByStore(Long storeId);
+
+    /**
+     * Gets a product by its id
+     *
+     * @param productId
+     * @return
+     */
+    Product getProductById(Long productId);
 }

@@ -2,6 +2,7 @@ package com.apelie.apelieapi.controllers;
 
 import com.apelie.apelieapi.controllers.dto.exception.GeneralExceptionResponse;
 import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,4 +29,12 @@ public interface ProductController {
     @PutMapping("/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@Valid @RequestBody CreateProductDTO createProductDTO, @PathVariable Long productId);
+
+    @Operation(summary = "Get a product by id", responses = {
+            @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{productId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductResponseDTO getProductById(@PathVariable Long productId);
 }
