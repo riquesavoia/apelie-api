@@ -38,4 +38,14 @@ public class StoreSpecifications {
             return root.join(Store_.CATEGORY_LIST).in(categoryList);
         });
     }
+
+    public static Specification<Store> belongsToUser(Long ownerId) {
+        if (ownerId == null) {
+            return null;
+        }
+
+        return ((root, query, criteriaBuilder) -> {
+            return criteriaBuilder.equal(root.join(Store_.OWNER).get("userId"), ownerId);
+        });
+    }
 }

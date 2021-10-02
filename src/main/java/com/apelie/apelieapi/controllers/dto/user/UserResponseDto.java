@@ -13,4 +13,5 @@ public class UserResponseDto {
     private String email;
     private String cpf;
     private String photoUrl;
+    private boolean hasStore;
 }

@@ -30,7 +30,8 @@ public interface StoreController {
     public List<StoreResponseDTO> getAllStores(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Float rating,
-            @RequestParam(required = false) List<StoreCategory> categories);
+            @RequestParam(required = false) List<StoreCategory> categories,
+            @RequestParam(required = false) Long ownerId);
 
     @Operation(summary = "Get all store categories", responses = {
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json"))

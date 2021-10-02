@@ -36,4 +36,12 @@ public interface StoreService {
      * @param createStoreDTO
      */
     void updateStore(CreateStoreDTO createStoreDTO);
+
+    /**
+     * Checks if given user has a store
+     *
+     * @param userId
+     * @return
+     */
+    boolean storeExistsByUserId(Long userId);
 }

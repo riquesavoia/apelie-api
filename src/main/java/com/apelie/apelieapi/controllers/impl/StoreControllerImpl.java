@@ -30,11 +30,12 @@ public class StoreControllerImpl implements StoreController {
     private ProductService productService;
 
     @Override
-    public List<StoreResponseDTO> getAllStores(String name, Float rating, List<StoreCategory> categories) {
+    public List<StoreResponseDTO> getAllStores(String name, Float rating, List<StoreCategory> categories, Long ownerId) {
         Specification<Store> specifications =
                 Specification.where(isNameLike(name))
                         .and(isRatingGreaterThan(rating))
-                        .and(belongsToCategories(categories));
+                        .and(belongsToCategories(categories))
+                        .and(belongsToUser(ownerId));
 
         return storeService.getAllStores(specifications)
                 .stream()

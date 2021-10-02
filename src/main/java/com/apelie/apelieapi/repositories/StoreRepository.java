@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<Store, Long>, JpaSpecificationExecutor<Store> {
 
     Optional<Store> findByOwnerUserId(Long userId);
+
+    boolean existsByOwnerUserId(Long userId);
 }

@@ -15,7 +15,7 @@ public class StoreMapper {
 
         return new StoreResponseDTO(
                 store.getStoreId(),
-                UserMapper.toDto(store.getOwner()),
+                UserMapper.toDto(store.getOwner(), true),
                 store.getTwitterAccount(),
                 store.getCategoryList(),
                 store.getProductList().stream().map(ProductMapper::toDto).collect(Collectors.toList()),

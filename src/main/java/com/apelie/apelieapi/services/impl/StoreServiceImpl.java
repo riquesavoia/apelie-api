@@ -100,4 +100,9 @@ public class StoreServiceImpl implements StoreService {
 
         storeRepository.save(updatedStore);
     }
+
+    @Override
+    public boolean storeExistsByUserId(Long userId) {
+        return this.storeRepository.existsByOwnerUserId(userId);
+    }
 }
