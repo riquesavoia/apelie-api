@@ -1,7 +1,7 @@
-package com.apelie.apelieapi.dto.store;
+package com.apelie.apelieapi.controllers.dto.store;
 
-import com.apelie.apelieapi.dto.product.ProductResponseDTO;
-import com.apelie.apelieapi.dto.user.UserResponseDto;
+import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
+import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import com.apelie.apelieapi.models.enums.StoreCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

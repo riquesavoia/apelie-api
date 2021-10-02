@@ -1,8 +1,8 @@
 package com.apelie.apelieapi.controllers.impl;
 
 import com.apelie.apelieapi.controllers.UserController;
-import com.apelie.apelieapi.dto.user.CreateUserDto;
-import com.apelie.apelieapi.dto.user.UserResponseDto;
+import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
+import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import com.apelie.apelieapi.mappers.UserMapper;
 import com.apelie.apelieapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

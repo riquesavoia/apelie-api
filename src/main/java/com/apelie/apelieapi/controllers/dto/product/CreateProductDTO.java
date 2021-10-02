@@ -1,5 +1,6 @@
-package com.apelie.apelieapi.dto.product;
+package com.apelie.apelieapi.controllers.dto.product;
 
+import com.apelie.apelieapi.controllers.validators.EncodedImageFileConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,5 +31,5 @@ public class CreateProductDTO {
     @NotNull(message = "Category cannot be null")
     private String category;
 
-    private List<String> images;
+    private List<@EncodedImageFileConstraint String> images;
 }

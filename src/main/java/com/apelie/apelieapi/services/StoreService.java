@@ -1,6 +1,6 @@
 package com.apelie.apelieapi.services;
 
-import com.apelie.apelieapi.dto.store.CreateStoreDTO;
+import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
 import com.apelie.apelieapi.models.Store;
 import org.springframework.data.jpa.domain.Specification;
 

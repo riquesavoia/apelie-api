@@ -1,7 +1,7 @@
 package com.apelie.apelieapi.mappers;
 
-import com.apelie.apelieapi.dto.product.CreateProductDTO;
-import com.apelie.apelieapi.dto.product.ProductResponseDTO;
+import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.models.Product;
 
 public class ProductMapper {

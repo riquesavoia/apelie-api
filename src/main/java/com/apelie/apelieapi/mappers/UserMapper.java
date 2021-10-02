@@ -1,6 +1,6 @@
 package com.apelie.apelieapi.mappers;
 
-import com.apelie.apelieapi.dto.user.UserResponseDto;
+import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import com.apelie.apelieapi.models.User;
 
 public class UserMapper {

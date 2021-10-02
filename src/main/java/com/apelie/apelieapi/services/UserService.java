@@ -1,6 +1,6 @@
 package com.apelie.apelieapi.services;
 
-import com.apelie.apelieapi.dto.user.CreateUserDto;
+import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
 import com.apelie.apelieapi.models.User;
 
 public interface UserService {

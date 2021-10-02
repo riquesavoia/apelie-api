@@ -1,4 +1,4 @@
-package com.apelie.apelieapi.dto.product;
+package com.apelie.apelieapi.controllers.dto.product;
 
 import com.apelie.apelieapi.models.ProductImage;
 import lombok.AllArgsConstructor;

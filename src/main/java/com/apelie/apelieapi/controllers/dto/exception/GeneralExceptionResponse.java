@@ -1,7 +1,4 @@
-package com.apelie.apelieapi.dto.exception;
-
-import java.util.Arrays;
-import java.util.List;
+package com.apelie.apelieapi.controllers.dto.exception;
 
 public class GeneralExceptionResponse {
     private int status;

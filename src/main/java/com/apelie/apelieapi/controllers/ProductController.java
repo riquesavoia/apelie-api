@@ -1,15 +1,12 @@
 package com.apelie.apelieapi.controllers;
 
-import com.apelie.apelieapi.dto.exception.BadRequestResponse;
-import com.apelie.apelieapi.dto.exception.GeneralExceptionResponse;
-import com.apelie.apelieapi.dto.product.CreateProductDTO;
-import com.apelie.apelieapi.dto.store.CreateStoreDTO;
-import com.apelie.apelieapi.services.ProductService;
+import com.apelie.apelieapi.controllers.dto.exception.GeneralExceptionResponse;
+import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

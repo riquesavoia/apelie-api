@@ -1,4 +1,4 @@
-package com.apelie.apelieapi.dto.user;
+package com.apelie.apelieapi.controllers.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

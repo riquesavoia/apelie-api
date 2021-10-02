@@ -1,7 +1,7 @@
 package com.apelie.apelieapi.controllers.impl;
 
 import com.apelie.apelieapi.controllers.CartController;
-import com.apelie.apelieapi.dto.product.ProductResponseDTO;
+import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.mappers.ProductMapper;
 import com.apelie.apelieapi.services.CartService;
 import com.apelie.apelieapi.services.UserService;

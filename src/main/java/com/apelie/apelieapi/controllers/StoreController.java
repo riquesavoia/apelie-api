@@ -1,31 +1,22 @@
 package com.apelie.apelieapi.controllers;
 
-import com.apelie.apelieapi.dto.exception.BadRequestResponse;
-import com.apelie.apelieapi.dto.exception.GeneralExceptionResponse;
-import com.apelie.apelieapi.dto.product.CreateProductDTO;
-import com.apelie.apelieapi.dto.product.ProductResponseDTO;
-import com.apelie.apelieapi.dto.store.CreateStoreDTO;
-import com.apelie.apelieapi.dto.store.StoreResponseDTO;
-import com.apelie.apelieapi.mappers.StoreMapper;
-import com.apelie.apelieapi.models.Store;
+import com.apelie.apelieapi.controllers.dto.exception.BadRequestResponse;
+import com.apelie.apelieapi.controllers.dto.exception.GeneralExceptionResponse;
+import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
+import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
+import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
 import com.apelie.apelieapi.models.enums.StoreCategory;
-import com.apelie.apelieapi.services.ProductService;
-import com.apelie.apelieapi.services.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.apelie.apelieapi.models.specifications.StoreSpecifications.*;
 
 @RestController
 @RequestMapping(path="/stores")

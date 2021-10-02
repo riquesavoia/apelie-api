@@ -1,10 +1,10 @@
 package com.apelie.apelieapi.controllers.impl;
 
 import com.apelie.apelieapi.controllers.StoreController;
-import com.apelie.apelieapi.dto.product.CreateProductDTO;
-import com.apelie.apelieapi.dto.product.ProductResponseDTO;
-import com.apelie.apelieapi.dto.store.CreateStoreDTO;
-import com.apelie.apelieapi.dto.store.StoreResponseDTO;
+import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
+import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
+import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
 import com.apelie.apelieapi.mappers.ProductMapper;
 import com.apelie.apelieapi.mappers.StoreMapper;
 import com.apelie.apelieapi.models.Store;

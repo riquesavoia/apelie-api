@@ -1,4 +1,4 @@
-package com.apelie.apelieapi.dto.exception;
+package com.apelie.apelieapi.controllers.dto.exception;
 
 import java.util.Arrays;
 import java.util.List;

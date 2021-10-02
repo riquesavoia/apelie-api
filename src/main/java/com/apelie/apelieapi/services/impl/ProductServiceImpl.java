@@ -1,6 +1,8 @@
 package com.apelie.apelieapi.services.impl;
 
-import com.apelie.apelieapi.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.exception.FileSizeException;
+import com.apelie.apelieapi.exception.FileTypeException;
 import com.apelie.apelieapi.mappers.ProductMapper;
 import com.apelie.apelieapi.models.Product;
 import com.apelie.apelieapi.models.ProductImage;
@@ -17,6 +19,7 @@ import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -46,6 +49,10 @@ public class ProductServiceImpl implements ProductService {
         }
 
         productRepository.delete(product);
+
+        for (ProductImage image : product.getImages()) {
+            this.fileService.deleteImageByUrl(image.getUrl());
+        }
     }
 
     @Override
@@ -77,9 +84,15 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductImage> imageList = new ArrayList<>();
 
-        for (String imageData: createProductDTO.getImages()) {
-            String imageUrl = this.fileService.uploadFile(imageData);
-            imageList.add(new ProductImage(imageUrl));
+        try {
+            for (String imageData: createProductDTO.getImages()) {
+                String imageUrl = this.fileService.uploadFile(imageData);
+                imageList.add(new ProductImage(imageUrl));
+            }
+        } catch (FileSizeException | FileTypeException e) {
+            throw new RuntimeException("Invalid file or size too large");
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
 
         Product product = ProductMapper.toEntity(createProductDTO);

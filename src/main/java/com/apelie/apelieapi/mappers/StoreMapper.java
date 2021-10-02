@@ -1,7 +1,7 @@
 package com.apelie.apelieapi.mappers;
 
-import com.apelie.apelieapi.dto.store.CreateStoreDTO;
-import com.apelie.apelieapi.dto.store.StoreResponseDTO;
+import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
+import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
 import com.apelie.apelieapi.models.Store;
 
 import java.util.stream.Collectors;

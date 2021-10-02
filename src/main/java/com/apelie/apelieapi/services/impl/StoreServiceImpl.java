@@ -1,6 +1,6 @@
 package com.apelie.apelieapi.services.impl;
 
-import com.apelie.apelieapi.dto.store.CreateStoreDTO;
+import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
 import com.apelie.apelieapi.mappers.StoreMapper;
 import com.apelie.apelieapi.models.Store;
 import com.apelie.apelieapi.models.User;
@@ -52,8 +52,15 @@ public class StoreServiceImpl implements StoreService {
         Store store = StoreMapper.toEntity(createStoreDTO);
         store.setOwner(owner);
 
-        String bannerUrl = fileService.uploadFile(createStoreDTO.getBannerImage());
-        String logoUrl = fileService.uploadFile(createStoreDTO.getLogoImage());
+        String bannerUrl;
+        String logoUrl;
+        try {
+            bannerUrl = fileService.uploadFile(createStoreDTO.getBannerImage());
+            logoUrl = fileService.uploadFile(createStoreDTO.getLogoImage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error when uploading image file");
+        }
 
         store.setBannerUrl(bannerUrl);
         store.setLogoUrl(logoUrl);
@@ -75,15 +82,21 @@ public class StoreServiceImpl implements StoreService {
 
         Store updatedStore = StoreMapper.toEntity(createStoreDTO, currentStore);
 
-        if (createStoreDTO.getBannerImage() != null) {
-            this.fileService.deleteImageByUrl(currentStore.getBannerUrl());
-            updatedStore.setBannerUrl(this.fileService.uploadFile(createStoreDTO.getBannerImage()));
+        try {
+            if (createStoreDTO.getBannerImage() != null) {
+                this.fileService.deleteImageByUrl(currentStore.getBannerUrl());
+                updatedStore.setBannerUrl(this.fileService.uploadFile(createStoreDTO.getBannerImage()));
+            }
+
+            if (createStoreDTO.getLogoImage() != null) {
+                this.fileService.deleteImageByUrl(currentStore.getLogoUrl());
+                updatedStore.setLogoUrl(this.fileService.uploadFile(createStoreDTO.getLogoImage()));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error when uploading image file");
         }
 
-        if (createStoreDTO.getLogoImage() != null) {
-            this.fileService.deleteImageByUrl(currentStore.getLogoUrl());
-            updatedStore.setLogoUrl(this.fileService.uploadFile(createStoreDTO.getLogoImage()));
-        }
 
         storeRepository.save(updatedStore);
     }

@@ -1,22 +1,15 @@
 package com.apelie.apelieapi.controllers;
 
-import com.apelie.apelieapi.dto.exception.BadRequestResponse;
-import com.apelie.apelieapi.dto.exception.GeneralExceptionResponse;
-import com.apelie.apelieapi.dto.product.ProductResponseDTO;
-import com.apelie.apelieapi.dto.user.CreateUserDto;
-import com.apelie.apelieapi.mappers.ProductMapper;
-import com.apelie.apelieapi.services.CartService;
-import com.apelie.apelieapi.services.UserService;
+import com.apelie.apelieapi.controllers.dto.exception.GeneralExceptionResponse;
+import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/cart")

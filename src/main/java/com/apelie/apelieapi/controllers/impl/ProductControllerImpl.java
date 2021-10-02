@@ -1,7 +1,7 @@
 package com.apelie.apelieapi.controllers.impl;
 
 import com.apelie.apelieapi.controllers.ProductController;
-import com.apelie.apelieapi.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

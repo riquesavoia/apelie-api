@@ -1,5 +1,6 @@
-package com.apelie.apelieapi.dto.user;
+package com.apelie.apelieapi.controllers.dto.user;
 
+import com.apelie.apelieapi.controllers.validators.EncodedImageFileConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,5 +26,6 @@ public class CreateUserDto {
     @NotBlank(message = "Email must not be null")
     private String email;
 
+    @EncodedImageFileConstraint
     private String photo;
 }

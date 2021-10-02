@@ -1,5 +1,6 @@
-package com.apelie.apelieapi.dto.store;
+package com.apelie.apelieapi.controllers.dto.store;
 
+import com.apelie.apelieapi.controllers.validators.EncodedImageFileConstraint;
 import com.apelie.apelieapi.models.enums.StoreCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,8 +34,10 @@ public class CreateStoreDTO {
     @Size(max=20, message = "Twitter account must have at most 20 characters")
     private String youtubeAccount;
 
+    @EncodedImageFileConstraint
     private String bannerImage;
 
+    @EncodedImageFileConstraint
     private String logoImage;
 
     @Size(max=20, message = "Twitter account must have at most 20 characters")

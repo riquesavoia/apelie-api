@@ -1,6 +1,6 @@
 package com.apelie.apelieapi.controllers;
 
-import com.apelie.apelieapi.dto.user.CreateUserDto;
+import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

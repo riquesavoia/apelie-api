@@ -1,9 +1,8 @@
 package com.apelie.apelieapi.services;
 
-import com.apelie.apelieapi.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.models.Product;
 
-import javax.naming.NoPermissionException;
 import java.util.List;
 
 public interface ProductService {
