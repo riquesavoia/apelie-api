@@ -1,31 +1,38 @@
 package com.apelie.apelieapi.services;
 
+import com.apelie.apelieapi.controllers.dto.cart.CreateCartItemDTO;
+import com.apelie.apelieapi.controllers.dto.cart.UpdateCartItemDTO;
+import com.apelie.apelieapi.models.CartItem;
 import com.apelie.apelieapi.models.Product;
+import com.apelie.apelieapi.models.User;
 
 import java.util.List;
 
 public interface CartService {
-    /**
-     * Adds a new product into logged user cart
-     *
-     * @param productId
-     * @param userId
-     */
-    void addProduct(Long productId, Long userId);
 
     /**
-     * Removes a product from logged user cart
+     * Adds a new cart item into given user cart
      *
-     * @param productId
-     * @param userId
+     * @param createCartItemDTO
+     * @param user
+     * @return
      */
-    void removeProduct(Long productId, Long userId);
+    CartItem addCartItem(CreateCartItemDTO createCartItemDTO, User user);
 
     /**
-     * Gets all products from logged user cart
+     * Updates an existing cart item from user cart
+     *
+     * @param updateCartItemDTO
+     * @param user
+     * @return
+     */
+    CartItem updateCartItem(UpdateCartItemDTO updateCartItemDTO, User user);
+
+    /**
+     * Gets all cart items from given user
      *
      * @param userId
      * @return
      */
-    List<Product> getProducts(Long userId);
+    List<CartItem> getCartItems(Long userId);
 }

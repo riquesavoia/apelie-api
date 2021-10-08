@@ -1,8 +1,10 @@
 package com.apelie.apelieapi.controllers.impl;
 
 import com.apelie.apelieapi.controllers.CartController;
-import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
-import com.apelie.apelieapi.mappers.ProductMapper;
+import com.apelie.apelieapi.controllers.dto.cart.CartItemResponseDTO;
+import com.apelie.apelieapi.controllers.dto.cart.CreateCartItemDTO;
+import com.apelie.apelieapi.controllers.dto.cart.UpdateCartItemDTO;
+import com.apelie.apelieapi.mappers.CartItemMapper;
 import com.apelie.apelieapi.services.CartService;
 import com.apelie.apelieapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +23,20 @@ public class CartControllerImpl implements CartController {
     private CartService cartService;
 
     @Override
-    public List<ProductResponseDTO> getCart()  {
-        return cartService.getProducts(userService.getLoggedUser().getUserId())
+    public List<CartItemResponseDTO> getCart() {
+        return cartService.getCartItems(userService.getLoggedUser().getUserId())
                 .stream()
-                .map(ProductMapper::toDto)
+                .map(CartItemMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addProductInCart(Long productId) {
-        cartService.addProduct(productId, userService.getLoggedUser().getUserId());
+    public CartItemResponseDTO addCartItem(CreateCartItemDTO cartItemDTO) {
+        return CartItemMapper.toDto(cartService.addCartItem(cartItemDTO, userService.getLoggedUser()));
     }
 
     @Override
-    public void removeProductInCart(Long productId) {
-        cartService.removeProduct(productId, userService.getLoggedUser().getUserId());
+    public CartItemResponseDTO updateCartItem(UpdateCartItemDTO cartItemDTO) {
+        return CartItemMapper.toDto(cartService.updateCartItem(cartItemDTO, userService.getLoggedUser()));
     }
 }

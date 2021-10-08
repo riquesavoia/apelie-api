@@ -1,78 +1,123 @@
 package com.apelie.apelieapi.services.impl;
 
-import com.apelie.apelieapi.models.Cart;
+import com.apelie.apelieapi.controllers.dto.cart.CreateCartItemDTO;
+import com.apelie.apelieapi.controllers.dto.cart.UpdateCartItemDTO;
+import com.apelie.apelieapi.models.CartItem;
 import com.apelie.apelieapi.models.Product;
-import com.apelie.apelieapi.repositories.CartRepository;
+import com.apelie.apelieapi.models.User;
+import com.apelie.apelieapi.repositories.CartItemRepository;
 import com.apelie.apelieapi.repositories.ProductRepository;
 import com.apelie.apelieapi.services.CartService;
-import com.apelie.apelieapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.security.AccessControlException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService {
 
     @Autowired
-    private CartRepository cartRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
     @Override
-    public void addProduct(Long productId, Long userId) {
-        Cart cart = cartRepository.findByOwnerUserId(userId);
+    public CartItem addCartItem(CreateCartItemDTO createCartItemDTO, User user) {
+        Product product = productRepository
+                .findById(createCartItemDTO.getProductId())
+                .orElseThrow(() -> new NoSuchElementException("Product not found"));
 
-        if (cart == null) {
-            cart = new Cart();
-            cart.setOwner(userService.getLoggedUser());
-            cart.setProductList(new ArrayList<>());
-        }
-
-        Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
-
-        if (product.getQuantity() <= 0) {
+        if (product.getQuantity() < 1) {
             throw new NoSuchElementException("Product out of stock");
         }
 
-        cart.getProductList().add(product);
-        cartRepository.save(cart);
+        CartItem newCartItem = new CartItem();
+        List<CartItem> userCartItemList = cartItemRepository.findAllByOwnerUserId(user.getUserId());
+
+        List<CartItem> existingCartItemList = userCartItemList
+                .stream()
+                .filter(cartItem -> cartItem.getProduct().equals(product))
+                .collect(Collectors.toList());
+
+        int remainingProducts = product.getQuantity();
+        for (CartItem currentCartItem : existingCartItemList) {
+            remainingProducts -= currentCartItem.getQuantity();
+        }
+
+        if (remainingProducts <= 0) {
+            throw new NoSuchElementException("Product out of stock");
+        }
+
+        newCartItem.setProduct(product);
+        newCartItem.setDescription(createCartItemDTO.getDescription());
+        newCartItem.setOwner(user);
+
+        newCartItem.setQuantity(Math.min(remainingProducts, createCartItemDTO.getQuantity()));
+
+        cartItemRepository.save(newCartItem);
+
+        return newCartItem;
     }
 
     @Override
-    public void removeProduct(Long productId, Long userId) {
-        Cart cart = cartRepository.findByOwnerUserId(userId);
+    public CartItem updateCartItem(UpdateCartItemDTO updateCartItemDTO, User user) {
+        CartItem updatedCartItem = cartItemRepository
+                .findById(updateCartItemDTO.getCartItemId())
+                .orElseThrow(() -> new NoSuchElementException("Cart item not found"));
 
-        if (cart == null) {
-            cart = new Cart();
-            cart.setOwner(userService.getLoggedUser());
-            cart.setProductList(new ArrayList<>());
-            cartRepository.save(cart);
+        if (updatedCartItem.getOwner().getUserId() != user.getUserId()) {
+            throw new AccessControlException("You don't have permission to edit this cart item");
         }
 
-        Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+        if (updateCartItemDTO.getQuantity() == 0) {
+            cartItemRepository.delete(updatedCartItem);
+            return null;
+        }
 
-        cart.getProductList().remove(product);
-        cartRepository.save(cart);
+        List<CartItem> userCartItemList = cartItemRepository.findAllByOwnerUserId(user.getUserId());
+
+        List<CartItem> existingCartItemList = userCartItemList
+                .stream()
+                .filter(cartItem -> cartItem.getProduct().equals(updatedCartItem.getProduct()))
+                .collect(Collectors.toList());
+
+        int remainingProducts = updatedCartItem.getProduct().getQuantity();
+        for (CartItem currentCartItem : existingCartItemList) {
+            remainingProducts -= currentCartItem.getQuantity();
+        }
+
+        if (remainingProducts <= 0) {
+            throw new NoSuchElementException("Product out of stock");
+        }
+
+        updatedCartItem.setQuantity(Math.min(remainingProducts, updatedCartItem.getQuantity()));
+
+        updatedCartItem.setDescription(updateCartItemDTO.getDescription());
+
+        cartItemRepository.save(updatedCartItem);
+
+        return updatedCartItem;
     }
 
     @Override
-    public List<Product> getProducts(Long userId) {
-        Cart cart = cartRepository.findByOwnerUserId(userId);
+    public List<CartItem> getCartItems(Long userId) {
+        List<CartItem> cartItemList = cartItemRepository.findAllByOwnerUserId(userId);
 
-        if (cart == null) {
-            cart = new Cart();
-            cart.setOwner(userService.getLoggedUser());
-            cart.setProductList(new ArrayList<>());
-            cartRepository.save(cart);
+        for (CartItem cartItem:cartItemList) {
+            if (cartItem.getQuantity() > cartItem.getProduct().getQuantity()) {
+                if (cartItem.getProduct().getQuantity() < 1) {
+                    cartItemRepository.delete(cartItem);
+                }
+                cartItem.setQuantity(cartItem.getProduct().getQuantity());
+                cartItemRepository.save(cartItem);
+            }
         }
 
-        return cart.getProductList();
+        return cartItemList;
     }
+
 }
