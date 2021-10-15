@@ -35,4 +35,11 @@ public interface CartService {
      * @return
      */
     List<CartItem> getCartItems(Long userId);
+
+    /**
+     * Clears all cart items from given user
+     *
+     * @param userId
+     */
+    void clearCartItems(Long userId);
 }

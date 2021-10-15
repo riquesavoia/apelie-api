@@ -120,4 +120,10 @@ public class CartServiceImpl implements CartService {
         return cartItemList;
     }
 
+    @Override
+    public void clearCartItems(Long userId) {
+        List<CartItem> cartItemList = cartItemRepository.findAllByOwnerUserId(userId);
+        cartItemRepository.deleteInBatch(cartItemList);
+    }
+
 }

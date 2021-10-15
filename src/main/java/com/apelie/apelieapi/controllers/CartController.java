@@ -4,6 +4,8 @@ import com.apelie.apelieapi.controllers.dto.cart.CartItemResponseDTO;
 import com.apelie.apelieapi.controllers.dto.cart.CreateCartItemDTO;
 import com.apelie.apelieapi.controllers.dto.cart.UpdateCartItemDTO;
 import com.apelie.apelieapi.controllers.dto.exception.GeneralExceptionResponse;
+import com.apelie.apelieapi.controllers.dto.order.CreateOrderDto;
+import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,4 +43,12 @@ public interface CartController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public CartItemResponseDTO updateCartItem(@Valid @RequestBody UpdateCartItemDTO cartItemDTO);
+
+    @Operation(summary = "Checkout cart items and creates orders", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateOrderDto.class))),
+            @ApiResponse(responseCode = "404", description = "Product out of stock", content = @Content(mediaType = "application/json", schema = @Schema(implementation = GeneralExceptionResponse.class)))
+    })
+    @PostMapping("/checkout")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<OrderResponseDto> checkout(@Valid @RequestBody CreateOrderDto createOrderDto);
 }
