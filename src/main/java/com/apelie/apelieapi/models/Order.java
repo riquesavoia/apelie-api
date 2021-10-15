@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "BuyOrder")
+@Table(name = "Order")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,23 +17,21 @@ public class BuyOrder {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long buyOrderId;
+    private Long orderId;
     private String trackingCode;
-    private String status;
+    private OrderStatus status;
+    private PaymentMethod paymentMethod;
     private Date createdAt;
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User owner;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name="store_id")
     private Store store;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_buy_order",
-            joinColumns = @JoinColumn(name = "buy_order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products;
+    @OneToMany
+    @JoinColumn(name="order_item_id")
+    private List<OrderItem> orderItemList;
 }
