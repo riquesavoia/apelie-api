@@ -4,6 +4,7 @@ import com.apelie.apelieapi.controllers.dto.address.AddressResponseDto;
 import com.apelie.apelieapi.controllers.dto.address.CreateAddressDto;
 import com.apelie.apelieapi.controllers.dto.address.UpdateAddressDto;
 import com.apelie.apelieapi.controllers.dto.exception.BadRequestResponse;
+import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -71,4 +72,13 @@ public interface UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<AddressResponseDto> getAllAddresses();
+
+    @Operation(summary = "Get all logged user orders", responses = {
+            @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderResponseDto.class))),
+            @ApiResponse(responseCode = "403", description = "Invalid token")
+    })
+    @GetMapping("/orders")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<OrderResponseDto> getAllUserOrders();
 }

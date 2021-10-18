@@ -2,6 +2,7 @@ package com.apelie.apelieapi.controllers;
 
 import com.apelie.apelieapi.controllers.dto.exception.BadRequestResponse;
 import com.apelie.apelieapi.controllers.dto.exception.GeneralExceptionResponse;
+import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
 import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
@@ -78,7 +79,15 @@ public interface StoreController {
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "Store not found", content = @Content(schema = @Schema(hidden = true)))
     })
-    @GetMapping("/{id}/products")
+    @GetMapping("/{storeId}/products")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductResponseDTO> getProductsInStore(@PathVariable Long id);
+    public List<ProductResponseDTO> getProductsInStore(@PathVariable Long storeId);
+
+    @Operation(summary = "Get all orders by store id", responses = {
+            @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Store not found", content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{storeId}/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderResponseDto> getAllStoreOrders(@PathVariable Long storeId);
 }

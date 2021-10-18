@@ -16,4 +16,20 @@ public interface OrderService {
      * @return
      */
     List<Order> createOrder(CreateOrderDto createOrderDto, User user);
+
+    /**
+     * Gets all orders from store by its id
+     *
+     * @param storeId
+     * @return
+     */
+    List<Order> getAllOrdersByStore(Long storeId);
+
+    /**
+     * Gets all orders from usser by its id
+     *
+     * @param userId
+     * @return
+     */
+    List<Order> getAllOrdersByUser(Long userId);
 }

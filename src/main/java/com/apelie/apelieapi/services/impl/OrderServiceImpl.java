@@ -3,11 +3,10 @@ package com.apelie.apelieapi.services.impl;
 import com.apelie.apelieapi.controllers.dto.order.CreateOrderDto;
 import com.apelie.apelieapi.models.*;
 import com.apelie.apelieapi.models.enums.OrderStatus;
-import com.apelie.apelieapi.repositories.AddressRepository;
-import com.apelie.apelieapi.repositories.OrderRepository;
-import com.apelie.apelieapi.repositories.ProductRepository;
+import com.apelie.apelieapi.repositories.*;
 import com.apelie.apelieapi.services.CartService;
 import com.apelie.apelieapi.services.OrderService;
+import com.apelie.apelieapi.services.UserService;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,19 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private AddressRepository addressRepository;
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private StoreRepository storeRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<Order> createOrder(CreateOrderDto createOrderDto, User user) {
@@ -85,5 +93,31 @@ public class OrderServiceImpl implements OrderService {
         cartService.clearCartItems(user.getUserId());
 
         return orderList;
+    }
+
+    @Override
+    public List<Order> getAllOrdersByStore(Long storeId) {
+        Store store = storeRepository
+                .findById(storeId)
+                .orElseThrow(() -> new NoSuchElementException("Store not found"));
+
+        if (store.getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
+            throw new AccessControlException("You don't have permission to view orders from this store");
+        }
+
+        return orderRepository.findAllByStoreStoreId(storeId);
+    }
+
+    @Override
+    public List<Order> getAllOrdersByUser(Long userId) {
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        if (user.getUserId() != userService.getLoggedUser().getUserId()) {
+            throw new AccessControlException("You don't have permission to view orders from this user");
+        }
+
+        return orderRepository.findAllByUserUserId(user.getUserId());
     }
 }

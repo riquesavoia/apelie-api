@@ -4,12 +4,15 @@ import com.apelie.apelieapi.controllers.UserController;
 import com.apelie.apelieapi.controllers.dto.address.AddressResponseDto;
 import com.apelie.apelieapi.controllers.dto.address.CreateAddressDto;
 import com.apelie.apelieapi.controllers.dto.address.UpdateAddressDto;
+import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import com.apelie.apelieapi.mappers.AddressMapper;
+import com.apelie.apelieapi.mappers.OrderMapper;
 import com.apelie.apelieapi.mappers.UserMapper;
 import com.apelie.apelieapi.models.User;
 import com.apelie.apelieapi.services.AddressService;
+import com.apelie.apelieapi.services.OrderService;
 import com.apelie.apelieapi.services.StoreService;
 import com.apelie.apelieapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ public class UserControllerImpl implements UserController {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public void create(CreateUserDto createUserRequest) {
@@ -63,6 +69,14 @@ public class UserControllerImpl implements UserController {
         return addressService.getAllByUserId(userService.getLoggedUser().getUserId())
                 .stream()
                 .map(AddressMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponseDto> getAllUserOrders() {
+        return orderService.getAllOrdersByUser(userService.getLoggedUser().getUserId())
+                .stream()
+                .map(OrderMapper::toDto)
                 .collect(Collectors.toList());
     }
 }
