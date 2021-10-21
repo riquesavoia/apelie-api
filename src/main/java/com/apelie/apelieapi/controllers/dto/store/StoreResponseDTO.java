@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ public class StoreResponseDTO {
     private Long storeId;
     private UserResponseDto owner;
     private String twitterAccount;
-    private List<StoreCategory> category;
+    private Set<StoreCategory> category;
     private List<ProductResponseDTO> products;
     private String instagramAccount;
     private String state;
@@ -37,3 +38,5 @@ public class StoreResponseDTO {
     private String logoUrl;
     private String description;
 }
+
+

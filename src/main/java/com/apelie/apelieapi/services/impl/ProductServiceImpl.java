@@ -16,9 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.AccessControlException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
             throw new AccessControlException("You don't have permission to add products into the store");
         }
 
-        List<ProductImage> imageList = new ArrayList<>();
+        Set<ProductImage> imageList = new HashSet<>();
 
         try {
             for (String imageData: createProductDTO.getImages()) {

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class CreateStoreDTO {
     private String twitterAccount;
 
     @NotEmpty(message = "Store must have at least one category.")
-    private List<StoreCategory> categories;
+    private Set<StoreCategory> categories;
 
     @Size(max=30, message = "Twitter account must have at most 30 characters")
     private String instagramAccount;

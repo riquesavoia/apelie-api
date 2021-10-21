@@ -1,5 +1,7 @@
 package com.apelie.apelieapi.controllers.validators;
 
+import com.amazonaws.util.StringUtils;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ public class EncodedImageFileValidator implements ConstraintValidator<EncodedIma
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
+        if (StringUtils.isNullOrEmpty(value)) {
             return true;
         }
 

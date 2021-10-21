@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,5 +19,5 @@ public class ProductResponseDTO {
     private String description;
     private int quantity;
     private String category;
-    private List<ProductImage> images;
+    private Set<ProductImage> images;
 }

@@ -4,9 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -38,7 +41,8 @@ public class Product {
     @OneToMany
     @JoinColumn(name="product_id")
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
-    private List<ProductImage> images;
+    @Fetch(FetchMode.JOIN)
+    private Set<ProductImage> images;
 
     @OneToMany(mappedBy = "product")
     private List<ProductRating> ratings;

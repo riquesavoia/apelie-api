@@ -75,8 +75,8 @@ public class StoreControllerImpl implements StoreController {
     }
 
     @Override
-    public List<ProductResponseDTO> getProductsInStore(Long id) {
-        return productService.getAllProductsByStore(id)
+    public List<ProductResponseDTO> getProductsInStore(Long storeId) {
+        return productService.getAllProductsByStore(storeId)
                 .stream()
                 .map(ProductMapper::toDto)
                 .collect(Collectors.toList());
