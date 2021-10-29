@@ -9,7 +9,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "buy_order")
@@ -43,5 +43,5 @@ public class Order {
     @OneToMany
     @JoinColumn(name="order_id")
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
-    private List<OrderItem> itemList;
+    private Set<OrderItem> itemList;
 }

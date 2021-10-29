@@ -28,4 +28,9 @@ public class ProductControllerImpl implements ProductController {
     public ProductResponseDTO getProductById(Long productId) {
         return ProductMapper.toDto(productService.getProductById(productId));
     }
+
+    @Override
+    public void deleteProductImage(Long productId, Long imageId) {
+
+    }
 }

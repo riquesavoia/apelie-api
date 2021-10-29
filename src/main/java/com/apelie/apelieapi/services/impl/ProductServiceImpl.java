@@ -12,6 +12,8 @@ import com.apelie.apelieapi.services.FileService;
 import com.apelie.apelieapi.services.ProductService;
 import com.apelie.apelieapi.services.StoreService;
 import com.apelie.apelieapi.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,74 +36,90 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    private static Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
+
     @Override
     public void deleteProduct(Long productId) {
-        if (productId == null) {
-            throw new RuntimeException("ProductID cannot be null");
-        }
+        try {
+            if (productId == null) {
+                throw new RuntimeException("ProductID cannot be null");
+            }
 
-        Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+            Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
 
-        if (product.getStore().getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
-            throw new AccessControlException("You don't have permission to remove this product");
-        }
+            if (product.getStore().getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
+                throw new AccessControlException("You don't have permission to remove this product");
+            }
 
-        productRepository.delete(product);
+            productRepository.delete(product);
 
-        for (ProductImage image : product.getImages()) {
-            this.fileService.deleteImageByUrl(image.getUrl());
+            for (ProductImage image : product.getImages()) {
+                this.fileService.deleteImageByUrl(image.getUrl());
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error when trying to remove a product", e);
+            throw e;
         }
     }
 
     @Override
     public List<Product> getAllProductsByStore(Long storeId) {
-        if (storeId == null) {
-            throw new RuntimeException("StoreID cannot be null");
+        try {
+            if (storeId == null) {
+                throw new RuntimeException("StoreID cannot be null");
+            }
+
+            Store store = storeService.getStoreById(storeId);
+
+            if (store == null) {
+                throw new NoSuchElementException("Store not found");
+            }
+
+            return productRepository.findAllByStoreStoreId(storeId);
+        } catch(Exception e) {
+            LOGGER.error("Error on getting products from store", e);
+            throw e;
         }
-
-        Store store = storeService.getStoreById(storeId);
-
-        if (store == null) {
-            throw new NoSuchElementException("Store not found");
-        }
-
-        return productRepository.findAllByStoreStoreId(storeId);
     }
 
     @Override
     public Product getProductById(Long productId) {
-        return productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+        try {
+            return productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+        } catch (Exception e) {
+            LOGGER.error("Error on getting product by id", e);
+            throw e;
+        }
     }
 
     @Override
     public void createProduct(CreateProductDTO createProductDTO, Long storeId) {
-        if (storeId == null) {
-            throw new RuntimeException("StoreID cannot be null");
-        }
-
-        Store store = storeService.getStoreById(storeId);
-
-        if (store.getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
-            throw new AccessControlException("You don't have permission to add products into the store");
-        }
-
-        Set<ProductImage> imageList = new HashSet<>();
-
         try {
+            if (storeId == null) {
+                throw new RuntimeException("StoreID cannot be null");
+            }
+
+            Store store = storeService.getStoreById(storeId);
+
+            if (store.getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
+                throw new AccessControlException("You don't have permission to add products into the store");
+            }
+
+            Set<ProductImage> imageList = new HashSet<>();
+
             for (String imageData: createProductDTO.getImages()) {
                 String imageUrl = this.fileService.uploadFile(imageData);
                 imageList.add(new ProductImage(imageUrl));
             }
-        } catch (FileSizeException | FileTypeException e) {
-            throw new RuntimeException("Invalid file or size too large");
+
+            Product product = ProductMapper.toEntity(createProductDTO);
+            product.setStore(store);
+            product.setImages(imageList);
+
+            productRepository.save(product);
         } catch (Exception e) {
+            LOGGER.error("Error when trying to create a product", e);
             throw new RuntimeException(e.getMessage());
         }
-
-        Product product = ProductMapper.toEntity(createProductDTO);
-        product.setStore(store);
-        product.setImages(imageList);
-
-        productRepository.save(product);
     }
 }

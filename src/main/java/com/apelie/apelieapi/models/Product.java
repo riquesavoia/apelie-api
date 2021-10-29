@@ -42,6 +42,7 @@ public class Product {
     @JoinColumn(name="product_id")
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
     @Fetch(FetchMode.JOIN)
+    @OrderBy("product_image_id")
     private Set<ProductImage> images;
 
     @OneToMany(mappedBy = "product")

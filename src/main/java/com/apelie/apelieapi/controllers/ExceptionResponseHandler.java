@@ -2,6 +2,8 @@ package com.apelie.apelieapi.controllers;
 
 import com.apelie.apelieapi.controllers.dto.exception.BadRequestResponse;
 import com.apelie.apelieapi.controllers.dto.exception.GeneralExceptionResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

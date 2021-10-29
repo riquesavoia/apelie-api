@@ -10,7 +10,6 @@ import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,7 +40,7 @@ public class Store {
 
     @OneToMany(mappedBy = "store")
     @Fetch(FetchMode.JOIN)
-    private List<Product> productList;
+    private Set<Product> productList;
 
     @Column(length = 50)
     private String instagramAccount;

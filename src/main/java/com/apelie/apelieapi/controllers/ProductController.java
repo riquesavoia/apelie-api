@@ -37,4 +37,13 @@ public interface ProductController {
     @GetMapping("/{productId}")
     @ResponseStatus(HttpStatus.OK)
     public ProductResponseDTO getProductById(@PathVariable Long productId);
+
+    @Operation(summary = "Delete a product image", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "204", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateStoreDTO.class))),
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = GeneralExceptionResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = GeneralExceptionResponse.class)))
+    })
+    @DeleteMapping("/{productId}/images/{imageId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProductImage(@PathVariable Long productId, @PathVariable Long imageId);
 }
