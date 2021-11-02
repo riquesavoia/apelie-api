@@ -92,7 +92,7 @@ public class CartServiceImpl implements CartService {
 
             List<CartItem> existingCartItemList = userCartItemList
                     .stream()
-                    .filter(cartItem -> cartItem.getProduct().equals(updatedCartItem.getProduct()))
+                    .filter(cartItem -> cartItem.getProduct().equals(updatedCartItem.getProduct()) && cartItem.getCartItemId() != updateCartItemDTO.getCartItemId())
                     .collect(Collectors.toList());
 
             int remainingProducts = updatedCartItem.getProduct().getQuantity();
@@ -104,7 +104,7 @@ public class CartServiceImpl implements CartService {
                 throw new NoSuchElementException("Product out of stock");
             }
 
-            updatedCartItem.setQuantity(Math.min(remainingProducts, updatedCartItem.getQuantity()));
+            updatedCartItem.setQuantity(Math.min(remainingProducts, updateCartItemDTO.getQuantity()));
 
             updatedCartItem.setDescription(updateCartItemDTO.getDescription());
 
