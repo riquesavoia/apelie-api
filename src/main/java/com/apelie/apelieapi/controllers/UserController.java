@@ -6,6 +6,7 @@ import com.apelie.apelieapi.controllers.dto.address.UpdateAddressDto;
 import com.apelie.apelieapi.controllers.dto.exception.BadRequestResponse;
 import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
+import com.apelie.apelieapi.controllers.dto.user.UpdateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,6 +29,14 @@ public interface UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody CreateUserDto createUserRequest);
+
+    @Operation(summary = "Update logged user", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateUserDto.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = BadRequestResponse.class)))
+    })
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUser(@Valid @RequestBody UpdateUserDto updateUserDto);
 
     @Operation(summary = "Get information about logged user", responses = {
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),

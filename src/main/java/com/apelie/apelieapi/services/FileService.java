@@ -14,7 +14,7 @@ public interface FileService {
      * @param encodedFile
      * @return
      */
-    String uploadFile(String encodedFile) throws IOException, FileSizeException, FileTypeException;
+    String uploadFile(String encodedFile);
 
     /**
      * Deletes an image given its url

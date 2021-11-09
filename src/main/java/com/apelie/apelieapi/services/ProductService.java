@@ -1,8 +1,11 @@
 package com.apelie.apelieapi.services;
 
 import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
+import com.apelie.apelieapi.exception.FileSizeException;
+import com.apelie.apelieapi.exception.FileTypeException;
 import com.apelie.apelieapi.models.Product;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
@@ -35,4 +38,21 @@ public interface ProductService {
      * @return
      */
     Product getProductById(Long productId);
+
+    /**
+     * Updates a given product
+     *
+     * @param createProductDTO
+     * @param storeId
+     * @return
+     */
+    Product updateProduct(CreateProductDTO createProductDTO, Long storeId);
+
+    /**
+     * Deletes a given image from a product
+     *
+     * @param productId
+     * @param imageId
+     */
+    void deleteProductImage(Long productId, Long imageId);
 }

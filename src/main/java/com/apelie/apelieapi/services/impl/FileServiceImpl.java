@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService {
                 .build();
     }
 
-    public String uploadFile(String encodedFile) throws IOException, FileSizeException, FileTypeException {
+    public String uploadFile(String encodedFile) {
         if (StringUtils.isEmpty(encodedFile)) {
             return null;
         }
@@ -70,7 +70,7 @@ public class FileServiceImpl implements FileService {
         }
     }
 
-    private File base64ToFile(String encodedFile, String filename) throws IOException, FileSizeException, FileTypeException {
+    private File base64ToFile(String encodedFile, String filename) {
         Long fileSize = (long)encodedFile.length() * (3/4);
         if (fileSize > (5 * 1048576)) {
             throw new FileSizeException("File too large");
@@ -89,9 +89,14 @@ public class FileServiceImpl implements FileService {
             throw new FileTypeException("File type not accepted");
         }
 
-        byte[] fileContent = Base64.getDecoder().decode(encodedParts[1]);
         File outputFile = new File(filename + "." + imageType);
-        FileUtils.writeByteArrayToFile(outputFile, fileContent);
+
+        try {
+            byte[] fileContent = Base64.getDecoder().decode(encodedParts[1]);
+            FileUtils.writeByteArrayToFile(outputFile, fileContent);
+        } catch (IOException ex) {
+            throw new RuntimeException("Error when converting byte array to file");
+        }
 
         return outputFile;
     }

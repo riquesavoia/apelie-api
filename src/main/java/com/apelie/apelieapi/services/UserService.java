@@ -1,6 +1,7 @@
 package com.apelie.apelieapi.services;
 
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
+import com.apelie.apelieapi.controllers.dto.user.UpdateUserDto;
 import com.apelie.apelieapi.models.User;
 
 public interface UserService {
@@ -17,4 +18,11 @@ public interface UserService {
      * @return
      */
     User getLoggedUser();
+
+    /**
+     * Updates logged user info
+     *
+     * @return
+     */
+    User updateUser(UpdateUserDto updateUserDto);
 }

@@ -1,5 +1,6 @@
 package com.apelie.apelieapi.services.impl;
 
+import com.amazonaws.util.CollectionUtils;
 import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.exception.FileSizeException;
 import com.apelie.apelieapi.exception.FileTypeException;
@@ -8,6 +9,7 @@ import com.apelie.apelieapi.models.Product;
 import com.apelie.apelieapi.models.ProductImage;
 import com.apelie.apelieapi.models.Store;
 import com.apelie.apelieapi.repositories.ProductRepository;
+import com.apelie.apelieapi.repositories.StoreRepository;
 import com.apelie.apelieapi.services.FileService;
 import com.apelie.apelieapi.services.ProductService;
 import com.apelie.apelieapi.services.StoreService;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.security.AccessControlException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -93,6 +96,68 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product updateProduct(CreateProductDTO updateProductDto, Long productId) {
+        try {
+            if (productId == null) {
+                throw new RuntimeException("ProductID cannot be null");
+            }
+
+            Product actualProduct = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+
+            if (actualProduct.getStore().getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
+                throw new AccessControlException("You don't have permission to edit this product");
+            }
+
+            Set<ProductImage> imageList = new HashSet<>();
+
+            if (!CollectionUtils.isNullOrEmpty(updateProductDto.getImages())) {
+                for (String imageData: updateProductDto.getImages()) {
+                    String imageUrl = this.fileService.uploadFile(imageData);
+                    imageList.add(new ProductImage(imageUrl));
+                }
+            }
+
+            Product productToUpdate = ProductMapper.toEntity(updateProductDto);
+            productToUpdate.setProductId(actualProduct.getProductId());
+            productToUpdate.setImages(imageList);
+            productToUpdate.setStore(actualProduct.getStore());
+
+            productRepository.save(productToUpdate);
+            return productToUpdate;
+        } catch (Exception e) {
+            LOGGER.error("Error on updating product", e);
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteProductImage(Long productId, Long imageId) {
+        try {
+            Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
+
+            if (!product.getImages().stream().anyMatch(image -> image.getProduct_image_id() == imageId)) {
+                throw new NoSuchElementException("Image does not belong to this product");
+            }
+
+            if (product.getStore().getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
+                throw new AccessControlException("You don't have permission to remove this image");
+            }
+
+            ProductImage imageToBeRemoved = product.getImages().stream()
+                    .filter(productImage -> productImage.getProduct_image_id() == imageId)
+                    .findFirst()
+                    .get();
+
+            product.getImages().remove(imageToBeRemoved);
+            fileService.deleteImageByUrl(imageToBeRemoved.getUrl());
+            productRepository.save(product);
+        } catch(Exception e) {
+            LOGGER.error("Error when trying to remove product image", e);
+            throw e;
+        }
+    }
+
+    @Override
     public void createProduct(CreateProductDTO createProductDTO, Long storeId) {
         try {
             if (storeId == null) {
@@ -119,7 +184,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(product);
         } catch (Exception e) {
             LOGGER.error("Error when trying to create a product", e);
-            throw new RuntimeException(e.getMessage());
+            throw e;
         }
     }
 }

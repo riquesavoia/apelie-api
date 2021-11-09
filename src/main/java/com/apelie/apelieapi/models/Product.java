@@ -38,7 +38,7 @@ public class Product {
     @JoinColumn(name="store_id")
     private Store store;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     @JoinColumn(name="product_id")
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
     @Fetch(FetchMode.JOIN)

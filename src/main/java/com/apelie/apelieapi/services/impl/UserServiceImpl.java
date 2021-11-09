@@ -1,6 +1,8 @@
 package com.apelie.apelieapi.services.impl;
 
+import com.amazonaws.util.StringUtils;
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
+import com.apelie.apelieapi.controllers.dto.user.UpdateUserDto;
 import com.apelie.apelieapi.models.User;
 import com.apelie.apelieapi.repositories.UserRepository;
 import com.apelie.apelieapi.services.FileService;
@@ -60,6 +62,32 @@ public class UserServiceImpl implements UserService {
             return userRepository.findByEmail(email);
         } catch (Exception e) {
             LOGGER.error("Error when getting logged user", e);
+            throw e;
+        }
+    }
+
+    @Override
+    public User updateUser(UpdateUserDto updateUserDto) {
+        try {
+            User updatedUser = getLoggedUser();
+            updatedUser.setFullName(updateUserDto.getFullName());
+            if (updateUserDto.getPassword() != null) {
+                updatedUser.setPassword(passwordEncoder.encode(updateUserDto.getPassword()));
+            }
+            updatedUser.setEmail(updateUserDto.getEmail());
+
+            if (!StringUtils.isNullOrEmpty(updateUserDto.getPhoto())) {
+                try {
+                    updatedUser.setPhotoUrl(fileService.uploadFile(updateUserDto.getPhoto()));
+                } catch (Exception e) {
+                    throw new RuntimeException("Error when uploading user profile picture");
+                }
+            }
+
+            userRepository.save(updatedUser);
+            return updatedUser;
+        } catch (Exception e) {
+            LOGGER.error("Error when updating logged user info", e);
             throw e;
         }
     }

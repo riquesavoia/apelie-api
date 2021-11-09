@@ -6,6 +6,7 @@ import com.apelie.apelieapi.controllers.dto.address.CreateAddressDto;
 import com.apelie.apelieapi.controllers.dto.address.UpdateAddressDto;
 import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
+import com.apelie.apelieapi.controllers.dto.user.UpdateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import com.apelie.apelieapi.mappers.AddressMapper;
 import com.apelie.apelieapi.mappers.OrderMapper;
@@ -39,6 +40,11 @@ public class UserControllerImpl implements UserController {
     @Override
     public void create(CreateUserDto createUserRequest) {
         this.userService.createUser(createUserRequest);
+    }
+
+    @Override
+    public void updateUser(UpdateUserDto updateUserDto) {
+        userService.updateUser(updateUserDto);
     }
 
     @Override
