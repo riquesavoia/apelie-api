@@ -44,4 +44,11 @@ public interface StoreService {
      * @return
      */
     boolean storeExistsByUserId(Long userId);
+
+    /**
+     * Gets a store based on owner id
+     *
+     * @return
+     */
+    Store getStoreByUserId(Long userId);
 }

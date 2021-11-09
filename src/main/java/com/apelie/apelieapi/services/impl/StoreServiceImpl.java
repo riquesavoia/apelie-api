@@ -135,4 +135,14 @@ public class StoreServiceImpl implements StoreService {
             throw e;
         }
     }
+
+    @Override
+    public Store getStoreByUserId(Long userId) {
+        try {
+            return storeRepository.findByOwnerUserId(userId).orElseThrow(() -> new NoSuchElementException("You don't have a store"));
+        } catch (Exception e) {
+            LOGGER.error("Error when getting store by user id", e);
+            throw e;
+        }
+    }
 }

@@ -5,11 +5,13 @@ import com.apelie.apelieapi.controllers.dto.address.AddressResponseDto;
 import com.apelie.apelieapi.controllers.dto.address.CreateAddressDto;
 import com.apelie.apelieapi.controllers.dto.address.UpdateAddressDto;
 import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
+import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UpdateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import com.apelie.apelieapi.mappers.AddressMapper;
 import com.apelie.apelieapi.mappers.OrderMapper;
+import com.apelie.apelieapi.mappers.StoreMapper;
 import com.apelie.apelieapi.mappers.UserMapper;
 import com.apelie.apelieapi.models.User;
 import com.apelie.apelieapi.services.AddressService;
@@ -53,6 +55,13 @@ public class UserControllerImpl implements UserController {
         boolean hasStore = this.storeService.storeExistsByUserId(loggedUser.getUserId());
 
         return UserMapper.toDto(loggedUser, hasStore);
+    }
+
+    @Override
+    public StoreResponseDTO getLoggedUserStore() {
+        User loggedUser = userService.getLoggedUser();
+
+        return StoreMapper.toDto(storeService.getStoreByUserId(loggedUser.getUserId()));
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.apelie.apelieapi.controllers.dto.address.CreateAddressDto;
 import com.apelie.apelieapi.controllers.dto.address.UpdateAddressDto;
 import com.apelie.apelieapi.controllers.dto.exception.BadRequestResponse;
 import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
+import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
 import com.apelie.apelieapi.controllers.dto.user.CreateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UpdateUserDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
@@ -46,6 +47,15 @@ public interface UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public UserResponseDto getLoggedUser();
+
+    @Operation(summary = "Get logged user store", responses = {
+            @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = StoreResponseDTO.class))),
+            @ApiResponse(responseCode = "403", description = "Invalid token")
+    })
+    @GetMapping("/me/store")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public StoreResponseDTO getLoggedUserStore();
 
     @Operation(summary = "Create a new address for logged user", responses = {
             @ApiResponse(description = "Successful Operation", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AddressResponseDto.class))),
