@@ -89,4 +89,9 @@ public class StoreControllerImpl implements StoreController {
                 .map(OrderMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void putOrderTrackingCode(String trackingCode, Long storeId, Long orderId) {
+        orderService.putOrderTrackingCode(storeId, orderId, trackingCode);
+    }
 }

@@ -32,4 +32,13 @@ public interface OrderService {
      * @return
      */
     List<Order> getAllOrdersByUser(Long userId);
+
+    /**
+     * Puts order tracking code
+     *
+     * @param storeId
+     * @param orderId
+     * @param trackingCode
+     */
+    void putOrderTrackingCode(Long storeId, Long orderId, String trackingCode);
 }

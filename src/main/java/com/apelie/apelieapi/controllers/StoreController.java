@@ -90,4 +90,12 @@ public interface StoreController {
     @GetMapping("/{storeId}/orders")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponseDto> getAllStoreOrders(@PathVariable Long storeId);
+
+    @Operation(summary = "Insert order tracking code", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "204"),
+            @ApiResponse(responseCode = "404", description = "Store/order not found", content = @Content(schema = @Schema(hidden = true)))
+    })
+    @PatchMapping("/{storeId}/orders/{orderId}/tracking-code/{trackingCode}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void putOrderTrackingCode(@PathVariable String trackingCode, @PathVariable Long storeId, @PathVariable Long orderId);
 }

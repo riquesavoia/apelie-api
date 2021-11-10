@@ -139,4 +139,21 @@ public class OrderServiceImpl implements OrderService {
             throw e;
         }
     }
+
+    @Override
+    public void putOrderTrackingCode(Long storeId, Long orderId, String trackingCode) {
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new NoSuchElementException("Store not found"));
+
+        if (userService.getLoggedUser().getUserId() != store.getOwner().getUserId()) {
+            throw new AccessControlException("You don't have permission to edit this order");
+        }
+
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new NoSuchElementException("Order not found"));
+        if (order.getStore() != store) {
+            throw new NoSuchElementException("Order does not belong to this store");
+        }
+
+        order.setTrackingCode(trackingCode);
+        orderRepository.save(order);
+    }
 }
