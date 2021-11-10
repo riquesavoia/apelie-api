@@ -1,7 +1,6 @@
 package com.apelie.apelieapi.mappers;
 
 import com.apelie.apelieapi.controllers.dto.order.OrderResponseDto;
-import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
 import com.apelie.apelieapi.models.Order;
 import com.apelie.apelieapi.models.OrderItem;
 import com.apelie.apelieapi.models.Store;
@@ -59,7 +58,7 @@ public class OrderMapper {
                 store.getSecondaryColor(),
                 store.getStreet(),
                 store.getCity(),
-                store.getCep(),
+                store.getZipCode(),
                 store.getName(),
                 store.getEmail(),
                 store.getPhone(),

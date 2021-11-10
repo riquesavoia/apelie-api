@@ -56,7 +56,7 @@ public class CreateStoreDTO {
     private String city;
 
     @Size(max=12, message = "CEP must have at most 12 characters")
-    private String cep;
+    private String zipCode;
 
     @Size(max=30, message = "Name must have at most 30 characters")
     @Size(min=4, message = "Name must have at least 4 characters")

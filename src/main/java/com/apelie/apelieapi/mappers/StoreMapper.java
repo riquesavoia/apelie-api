@@ -28,7 +28,7 @@ public class StoreMapper {
                 store.getSecondaryColor(),
                 store.getStreet(),
                 store.getCity(),
-                store.getCep(),
+                store.getZipCode(),
                 store.getName(),
                 store.getEmail(),
                 store.getPhone(),
@@ -43,7 +43,7 @@ public class StoreMapper {
     public static Store toEntity(CreateStoreDTO createStoreDTO) {
         Store store = new Store();
         store.setEmail(createStoreDTO.getEmail());
-        store.setCep(createStoreDTO.getCep());
+        store.setZipCode(createStoreDTO.getZipCode());
         store.setState(createStoreDTO.getState());
         store.setNeighbourhood(createStoreDTO.getNeighbourhood());
         store.setInstagramAccount(createStoreDTO.getInstagramAccount());
@@ -65,7 +65,7 @@ public class StoreMapper {
 
     public static Store toEntity(CreateStoreDTO createStoreDTO, Store store) {
         store.setEmail(createStoreDTO.getEmail());
-        store.setCep(createStoreDTO.getCep());
+        store.setZipCode(createStoreDTO.getZipCode());
         store.setState(createStoreDTO.getState());
         store.setNeighbourhood(createStoreDTO.getNeighbourhood());
         store.setInstagramAccount(createStoreDTO.getInstagramAccount());

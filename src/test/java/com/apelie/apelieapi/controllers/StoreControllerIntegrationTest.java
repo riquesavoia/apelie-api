@@ -43,7 +43,7 @@ public class StoreControllerIntegrationTest {
         store.setAddressNumber("100");
         store.setCategoryList(categoryList);
         store.setBannerUrl("bannerurl.com");
-        store.setCep("13095-541");
+        store.setZipCode("13095-541");
         store.setCity("TestCity");
         store.setEmail("email@email.com");
         store.setDescription("Description test");
@@ -72,7 +72,7 @@ public class StoreControllerIntegrationTest {
         store.setAddressNumber("100");
         store.setCategoryList(categoryList);
         store.setBannerUrl("bannerurl.com");
-        store.setCep("13095-541");
+        store.setZipCode("13095-541");
         store.setCity("TestCity");
         store.setEmail("email@email.com");
         store.setDescription("Description test");

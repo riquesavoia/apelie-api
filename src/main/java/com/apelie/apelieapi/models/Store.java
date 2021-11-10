@@ -71,7 +71,7 @@ public class Store {
     private String city;
 
     @Column(length = 20)
-    private String cep;
+    private String zipCode;
 
     @Column(length = 50)
     private String name;

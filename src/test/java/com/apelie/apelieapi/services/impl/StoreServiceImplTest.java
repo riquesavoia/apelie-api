@@ -42,7 +42,7 @@ public class StoreServiceImplTest {
         store.setAddressNumber("100");
         store.setCategoryList(categoryList);
         store.setBannerUrl("bannerurl.com");
-        store.setCep("13095-541");
+        store.setZipCode("13095-541");
         store.setCity("TestCity");
         store.setEmail("email@email.com");
         store.setDescription("Description test");
@@ -57,7 +57,7 @@ public class StoreServiceImplTest {
         store2.setAddressNumber("101");
         store2.setCategoryList(categoryList);
         store2.setBannerUrl("banner.com/banner.png");
-        store2.setCep("11542-541");
+        store2.setZipCode("11542-541");
         store2.setCity("AnotherCity");
         store2.setEmail("email2@email.com");
         store2.setDescription("Description test");
