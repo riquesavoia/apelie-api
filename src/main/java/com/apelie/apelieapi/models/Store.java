@@ -17,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE store SET deleted = true WHERE store_id=?")
 public class Store {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -40,6 +41,7 @@ public class Store {
 
     @OneToMany(mappedBy = "store")
     @Fetch(FetchMode.JOIN)
+    @Where(clause = "deleted = false")
     private Set<Product> productList;
 
     @Column(length = 50)
@@ -92,4 +94,6 @@ public class Store {
 
     @Lob
     private String description;
+
+    private boolean deleted = false;
 }

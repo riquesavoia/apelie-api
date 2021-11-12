@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE address SET deleted = true WHERE address_id=?")
 public class Address {
 
     @Id
@@ -29,4 +31,6 @@ public class Address {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
+    private boolean deleted = false;
 }

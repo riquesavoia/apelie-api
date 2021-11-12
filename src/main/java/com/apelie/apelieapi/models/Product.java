@@ -3,11 +3,12 @@ package com.apelie.apelieapi.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE product SET deleted = true WHERE product_id=?")
 public class Product {
 
     @Id
@@ -47,4 +49,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<ProductRating> ratings;
+
+    private boolean deleted = false;
 }

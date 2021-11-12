@@ -30,17 +30,14 @@ public class AddressMapper {
             return null;
         }
 
-        Address address = new Address(
-                null,
-                createAddressDto.getCity(),
-                createAddressDto.getComplement(),
-                createAddressDto.getDistrict(),
-                createAddressDto.getNumber(),
-                createAddressDto.getState(),
-                createAddressDto.getStreet(),
-                createAddressDto.getZipCode(),
-                null
-        );
+        Address address = new Address();
+        address.setCity(createAddressDto.getCity());
+        address.setComplement(createAddressDto.getComplement());
+        address.setDistrict(createAddressDto.getDistrict());
+        address.setNumber(createAddressDto.getNumber());
+        address.setState(createAddressDto.getState());
+        address.setStreet(createAddressDto.getStreet());
+        address.setZipCode(createAddressDto.getZipCode());
 
         return address;
     }
@@ -50,17 +47,16 @@ public class AddressMapper {
             return null;
         }
 
-        Address address = new Address(
-                currentAddress.getAddressId(),
-                updateAddressDto.getCity(),
-                updateAddressDto.getComplement(),
-                updateAddressDto.getDistrict(),
-                updateAddressDto.getNumber(),
-                updateAddressDto.getState(),
-                updateAddressDto.getStreet(),
-                updateAddressDto.getZipCode(),
-                currentAddress.getUser()
-        );
+        Address address = new Address();
+        address.setAddressId(updateAddressDto.getAddressId());
+        address.setCity(updateAddressDto.getCity());
+        address.setComplement(updateAddressDto.getComplement());
+        address.setDistrict(updateAddressDto.getDistrict());
+        address.setNumber(updateAddressDto.getNumber());
+        address.setState(updateAddressDto.getState());
+        address.setStreet(updateAddressDto.getStreet());
+        address.setZipCode(updateAddressDto.getZipCode());
+        address.setUser(currentAddress.getUser());
 
         return address;
     }

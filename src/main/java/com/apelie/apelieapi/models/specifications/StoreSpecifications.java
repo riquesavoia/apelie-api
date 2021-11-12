@@ -48,4 +48,19 @@ public class StoreSpecifications {
             return criteriaBuilder.equal(root.join(Store_.OWNER).get("userId"), ownerId);
         });
     }
+
+    public static Specification<Store> isDeleted(boolean deleted) {
+        return ((root, query, criteriaBuilder) -> {
+            return criteriaBuilder.equal(root.get(Store_.DELETED), deleted);
+        });
+    }
+
+    public static Specification<Store> hasProducts(boolean hasProducts) {
+        return ((root, query, criteriaBuilder) -> {
+            if (hasProducts) {
+                return criteriaBuilder.isNotEmpty(root.get(Store_.PRODUCT_LIST));
+            }
+            return null;
+        });
+    }
 }

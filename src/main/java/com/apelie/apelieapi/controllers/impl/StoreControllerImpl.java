@@ -41,7 +41,9 @@ public class StoreControllerImpl implements StoreController {
                 Specification.where(isNameLike(name))
                         .and(isRatingGreaterThan(rating))
                         .and(belongsToCategories(categories))
-                        .and(belongsToUser(ownerId));
+                        .and(belongsToUser(ownerId))
+                        .and(isDeleted(false))
+                        .and(hasProducts(true));
 
         return storeService.getAllStores(specifications)
                 .stream()
@@ -72,6 +74,11 @@ public class StoreControllerImpl implements StoreController {
     @Override
     public void updateStore(CreateStoreDTO createStoreDTO) {
         storeService.updateStore(createStoreDTO);
+    }
+
+    @Override
+    public void deleteStore(Long id) {
+        storeService.deleteStore(id);
     }
 
     @Override

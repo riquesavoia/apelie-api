@@ -75,6 +75,14 @@ public interface StoreController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStore(@Valid @RequestBody CreateStoreDTO createStoreDTO);
 
+    @Operation(summary = "Delete store by ID", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "204", content = @Content(mediaType = "application/json", schema = @Schema(implementation = StoreResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Store not found", content = @Content(schema = @Schema(hidden = true)))
+    })
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStore(@PathVariable Long id);
+
     @Operation(summary = "Get products in store by id", responses = {
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))),
             @ApiResponse(responseCode = "404", description = "Store not found", content = @Content(schema = @Schema(hidden = true)))

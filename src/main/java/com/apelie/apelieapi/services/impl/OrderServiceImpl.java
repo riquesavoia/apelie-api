@@ -61,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
 
             MultiValuedMap<Store, OrderItem> itemMap = new ArrayListValuedHashMap<>();
             Map<Product, Integer> productQuantity = new HashMap<>();
+            float totalValue = 0;
 
             List<Order> orderList = new ArrayList<>();
 
@@ -80,7 +81,9 @@ public class OrderServiceImpl implements OrderService {
             for(Store store: itemMap.keys()) {
                 Order order = new Order();
                 order.setCreatedAt(new Date(System.currentTimeMillis()));
-                order.setItemList(new HashSet(itemMap.get(store)));
+                Set<OrderItem> itemList = new HashSet(itemMap.get(store));
+                order.setItemList(itemList);
+                order.setTotalValue(calculateTotalPrice(itemList));
                 order.setStatus(OrderStatus.AWAITING_PAYMENT);
                 order.setStore(store);
                 order.setUser(user);
@@ -155,5 +158,18 @@ public class OrderServiceImpl implements OrderService {
 
         order.setTrackingCode(trackingCode);
         orderRepository.save(order);
+    }
+
+    /**
+     * Calculates total price of an order item collection
+     * @param orderItemSet
+     * @return
+     */
+    private float calculateTotalPrice(Set<OrderItem> orderItemSet) {
+        float total = 0;
+        for(OrderItem orderItem:orderItemSet) {
+            total += orderItem.getQuantity() * orderItem.getProduct().getPrice();
+        }
+        return total;
     }
 }

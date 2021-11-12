@@ -51,4 +51,11 @@ public interface StoreService {
      * @return
      */
     Store getStoreByUserId(Long userId);
+
+    /**
+     * Deletes a given store
+     *
+     * @param storeId
+     */
+    void deleteStore(Long storeId);
 }

@@ -19,6 +19,7 @@ public class OrderMapper {
                 order.getStatus(),
                 order.getPaymentMethod(),
                 order.getCreatedAt(),
+                order.getTotalValue(),
                 UserMapper.toDto(order.getUser(), false),
                 OrderMapper.toDto(order.getStore()),
                 order.getItemList().stream().map(OrderMapper::toDto).collect(Collectors.toList())

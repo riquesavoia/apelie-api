@@ -27,6 +27,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     private Date createdAt;
+    private float totalValue;
 
     @ManyToOne
     @JoinColumn(name="user_id")

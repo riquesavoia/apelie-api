@@ -107,11 +107,15 @@ public class StoreServiceImpl implements StoreService {
                 if (createStoreDTO.getBannerImage() != null) {
                     this.fileService.deleteImageByUrl(currentStore.getBannerUrl());
                     updatedStore.setBannerUrl(this.fileService.uploadFile(createStoreDTO.getBannerImage()));
+                } else {
+                    updatedStore.setBannerUrl(currentStore.getBannerUrl());
                 }
 
                 if (createStoreDTO.getLogoImage() != null) {
                     this.fileService.deleteImageByUrl(currentStore.getLogoUrl());
                     updatedStore.setLogoUrl(this.fileService.uploadFile(createStoreDTO.getLogoImage()));
+                } else {
+                    updatedStore.setLogoUrl(currentStore.getLogoUrl());
                 }
             } catch(Exception e) {
                 e.printStackTrace();
@@ -142,6 +146,22 @@ public class StoreServiceImpl implements StoreService {
             return storeRepository.findByOwnerUserId(userId).orElseThrow(() -> new NoSuchElementException("You don't have a store"));
         } catch (Exception e) {
             LOGGER.error("Error when getting store by user id", e);
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteStore(Long storeId) {
+        try {
+            Store store = storeRepository.findById(storeId).orElseThrow(() -> new NoSuchElementException("Store not found"));
+
+            if (store.getOwner().getUserId() != userService.getLoggedUser().getUserId()) {
+                throw new AccessControlException("You don't have permission to remove this store");
+            }
+
+            storeRepository.delete(store);
+        } catch (Exception e) {
+            LOGGER.error("Error when deleting store", e);
             throw e;
         }
     }
