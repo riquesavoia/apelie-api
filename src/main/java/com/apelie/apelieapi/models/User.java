@@ -21,7 +21,5 @@ public class User {
     private String password;
     @Column(length = 40, unique=true)
     private String email;
-    @Column(length = 15)
-    private String cpf;
     private String photoUrl;
 }

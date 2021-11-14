@@ -11,7 +11,6 @@ public class UserResponseDto {
     private Long userId;
     private String fullName;
     private String email;
-    private String cpf;
     private String photoUrl;
     private boolean hasStore;
 }

@@ -13,7 +13,6 @@ public class UserMapper {
                 user.getUserId(),
                 user.getFullName(),
                 user.getEmail(),
-                user.getCpf(),
                 user.getPhotoUrl(),
                 hasStore
         );
