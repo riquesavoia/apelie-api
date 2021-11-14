@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +21,7 @@ public class OrderResponseDto {
     private String trackingCode;
     private OrderStatus status;
     private PaymentMethod paymentMethod;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private float totalValue;
     private UserResponseDto user;
     private OrderResponseDto.StoreResponseDto store;
@@ -53,7 +53,7 @@ public class OrderResponseDto {
         private String secondaryColor;
         private String street;
         private String city;
-        private String cep;
+        private String zipCode;
         private String name;
         private String email;
         private String phone;

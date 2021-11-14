@@ -28,7 +28,7 @@ public class StoreResponseDTO {
     private String secondaryColor;
     private String street;
     private String city;
-    private String cep;
+    private String zipCode;
     private String name;
     private String email;
     private String phone;

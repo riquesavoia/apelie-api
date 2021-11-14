@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -26,7 +26,9 @@ public class Order {
     private OrderStatus status;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-    private Date createdAt;
+
+    @Column(name = "", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
     private float totalValue;
 
     @ManyToOne

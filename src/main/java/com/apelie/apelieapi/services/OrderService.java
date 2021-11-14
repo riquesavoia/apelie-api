@@ -41,4 +41,12 @@ public interface OrderService {
      * @param trackingCode
      */
     void putOrderTrackingCode(Long storeId, Long orderId, String trackingCode);
+
+    /**
+     * Gets order by id
+     *
+     * @param orderId
+     * @return
+     */
+    Order getOrderById(Long orderId);
 }

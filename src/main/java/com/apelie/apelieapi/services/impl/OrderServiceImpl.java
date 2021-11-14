@@ -15,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.AccessControlException;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
 @Service
@@ -80,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 
             for(Store store: itemMap.keys()) {
                 Order order = new Order();
-                order.setCreatedAt(new Date(System.currentTimeMillis()));
+                order.setCreatedAt(LocalDateTime.now(ZoneOffset.UTC));
                 Set<OrderItem> itemList = new HashSet(itemMap.get(store));
                 order.setItemList(itemList);
                 order.setTotalValue(calculateTotalPrice(itemList));
@@ -158,6 +159,24 @@ public class OrderServiceImpl implements OrderService {
 
         order.setTrackingCode(trackingCode);
         orderRepository.save(order);
+    }
+
+    @Override
+    public Order getOrderById(Long orderId) {
+        try {
+            Order order = orderRepository
+                    .findById(orderId)
+                    .orElseThrow(() -> new NoSuchElementException("Order not found"));
+
+            if (order.getUser().getUserId() != userService.getLoggedUser().getUserId()) {
+                throw new AccessControlException("You don't have permission to view this order");
+            }
+
+            return order;
+        } catch (Exception e) {
+            LOGGER.error("Error when getting order by id", e);
+            throw e;
+        }
     }
 
     /**
