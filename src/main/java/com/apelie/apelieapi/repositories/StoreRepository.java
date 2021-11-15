@@ -2,10 +2,8 @@ package com.apelie.apelieapi.repositories;
 
 import com.apelie.apelieapi.models.Store;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,4 +19,9 @@ public interface StoreRepository extends JpaRepository<Store, Long>, JpaSpecific
 
     @EntityGraph(attributePaths = {"productList", "productList.images", "owner", "categoryList"})
     List<Store> findAll(Specification<Store> specifications);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Store s SET rating=(SELECT avg(sr.rating) FROM StoreReview sr WHERE sr.store.storeId = ?1) WHERE s.storeId = ?1")
+    void updateStoreRating(Long storeId);
 }

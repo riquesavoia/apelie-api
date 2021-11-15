@@ -47,4 +47,8 @@ public class Order {
     @JoinColumn(name="order_id")
     @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
     private Set<OrderItem> itemList;
+
+    @OneToOne
+    @JoinColumn(name="review_id")
+    private StoreReview storeReview;
 }

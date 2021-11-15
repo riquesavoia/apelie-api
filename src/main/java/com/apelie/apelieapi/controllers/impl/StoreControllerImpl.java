@@ -6,13 +6,16 @@ import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
 import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
+import com.apelie.apelieapi.controllers.dto.store_review.StoreReviewResponseDto;
 import com.apelie.apelieapi.mappers.OrderMapper;
 import com.apelie.apelieapi.mappers.ProductMapper;
 import com.apelie.apelieapi.mappers.StoreMapper;
+import com.apelie.apelieapi.mappers.StoreReviewMapper;
 import com.apelie.apelieapi.models.Store;
 import com.apelie.apelieapi.models.enums.StoreCategory;
 import com.apelie.apelieapi.services.OrderService;
 import com.apelie.apelieapi.services.ProductService;
+import com.apelie.apelieapi.services.StoreReviewService;
 import com.apelie.apelieapi.services.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,6 +37,9 @@ public class StoreControllerImpl implements StoreController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private StoreReviewService storeReviewService;
 
     @Override
     public List<StoreResponseDTO> getAllStores(String name, Float rating, List<StoreCategory> categories, Long ownerId) {
@@ -94,6 +100,14 @@ public class StoreControllerImpl implements StoreController {
         return orderService.getAllOrdersByStore(storeId)
                 .stream()
                 .map(OrderMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StoreReviewResponseDto> getAllStoreReviews(Long storeId) {
+        return storeReviewService.getAllStoreReviewByStore(storeId)
+                .stream()
+                .map(StoreReviewMapper::toDto)
                 .collect(Collectors.toList());
     }
 

@@ -2,6 +2,7 @@ package com.apelie.apelieapi.services;
 
 import com.apelie.apelieapi.controllers.dto.order.CreateOrderDto;
 import com.apelie.apelieapi.models.Order;
+import com.apelie.apelieapi.models.StoreReview;
 import com.apelie.apelieapi.models.User;
 
 import java.util.List;
@@ -49,4 +50,11 @@ public interface OrderService {
      * @return
      */
     Order getOrderById(Long orderId);
+
+    /**
+     * Inserts a store review in given order
+     *
+     * @param storeReview
+     */
+    void insertStoreReview(StoreReview storeReview, Long orderId);
 }

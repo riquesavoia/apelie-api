@@ -179,6 +179,22 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public void insertStoreReview(StoreReview storeReview, Long orderId) {
+        try {
+            Order order = orderRepository
+                    .findById(orderId)
+                    .orElseThrow(() -> new NoSuchElementException("Order not found"));
+
+            order.setStoreReview(storeReview);
+
+            orderRepository.save(order);
+        } catch (Exception e) {
+            LOGGER.error("Error when inserting order review", e);
+            throw e;
+        }
+    }
+
     /**
      * Calculates total price of an order item collection
      * @param orderItemSet

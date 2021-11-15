@@ -7,6 +7,7 @@ import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
 import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.controllers.dto.store.CreateStoreDTO;
 import com.apelie.apelieapi.controllers.dto.store.StoreResponseDTO;
+import com.apelie.apelieapi.controllers.dto.store_review.StoreReviewResponseDto;
 import com.apelie.apelieapi.models.enums.StoreCategory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -98,6 +99,14 @@ public interface StoreController {
     @GetMapping("/{storeId}/orders")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponseDto> getAllStoreOrders(@PathVariable Long storeId);
+
+    @Operation(summary = "Get all reviews by store id", responses = {
+            @ApiResponse(description = "OK", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = StoreReviewResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Store not found", content = @Content(schema = @Schema(hidden = true)))
+    })
+    @GetMapping("/{storeId}/reviews")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StoreReviewResponseDto> getAllStoreReviews(@PathVariable Long storeId);
 
     @Operation(summary = "Insert order tracking code", responses = {
             @ApiResponse(description = "Successful Operation", responseCode = "204"),
