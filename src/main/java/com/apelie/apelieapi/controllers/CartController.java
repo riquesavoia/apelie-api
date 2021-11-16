@@ -51,4 +51,11 @@ public interface CartController {
     @PostMapping("/checkout")
     @ResponseStatus(HttpStatus.CREATED)
     public List<OrderResponseDto> checkout(@Valid @RequestBody CreateOrderDto createOrderDto);
+
+    @Operation(summary = "Clears logged user cart items", responses = {
+            @ApiResponse(description = "Successful Operation", responseCode = "204", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateOrderDto.class)))
+    })
+    @PostMapping("/clear")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void clearCartItems();
 }

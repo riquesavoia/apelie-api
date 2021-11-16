@@ -54,4 +54,9 @@ public class CartControllerImpl implements CartController {
                 .map(OrderMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void clearCartItems() {
+        cartService.clearCartItems(userService.getLoggedUser().getUserId());
+    }
 }
