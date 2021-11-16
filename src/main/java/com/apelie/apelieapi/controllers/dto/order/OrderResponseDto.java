@@ -1,6 +1,7 @@
 package com.apelie.apelieapi.controllers.dto.order;
 
 import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
+import com.apelie.apelieapi.controllers.dto.store_review.StoreReviewResponseDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
 import com.apelie.apelieapi.models.enums.OrderStatus;
 import com.apelie.apelieapi.models.enums.PaymentMethod;
@@ -26,6 +27,7 @@ public class OrderResponseDto {
     private UserResponseDto user;
     private OrderResponseDto.StoreResponseDto store;
     private List<OrderItemResponseDto> itemList;
+    private StoreReviewResponseDto review;
 
     @Getter
     @Setter
