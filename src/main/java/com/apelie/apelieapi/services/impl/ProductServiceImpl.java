@@ -135,7 +135,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             Product product = productRepository.findById(productId).orElseThrow(() -> new NoSuchElementException("Product not found"));
 
-            if (!product.getImages().stream().anyMatch(image -> image.getProduct_image_id() == imageId)) {
+            if (product.getImages().stream().noneMatch(image -> image.getProduct_image_id().equals(imageId))) {
                 throw new NoSuchElementException("Image does not belong to this product");
             }
 
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
             }
 
             ProductImage imageToBeRemoved = product.getImages().stream()
-                    .filter(productImage -> productImage.getProduct_image_id() == imageId)
+                    .filter(productImage -> productImage.getProduct_image_id().equals(imageId))
                     .findFirst()
                     .get();
 
