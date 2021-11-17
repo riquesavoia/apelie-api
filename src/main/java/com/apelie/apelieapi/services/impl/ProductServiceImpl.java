@@ -108,18 +108,17 @@ public class ProductServiceImpl implements ProductService {
                 throw new AccessControlException("You don't have permission to edit this product");
             }
 
-            Set<ProductImage> imageList = new HashSet<>();
+            Product productToUpdate = ProductMapper.toEntity(updateProductDto);
+            productToUpdate.setImages(actualProduct.getImages());
 
             if (!CollectionUtils.isNullOrEmpty(updateProductDto.getImages())) {
                 for (String imageData: updateProductDto.getImages()) {
                     String imageUrl = this.fileService.uploadFile(imageData);
-                    imageList.add(new ProductImage(imageUrl));
+                    productToUpdate.getImages().add(new ProductImage(imageUrl));
                 }
             }
 
-            Product productToUpdate = ProductMapper.toEntity(updateProductDto);
             productToUpdate.setProductId(actualProduct.getProductId());
-            productToUpdate.setImages(imageList);
             productToUpdate.setStore(actualProduct.getStore());
 
             productRepository.save(productToUpdate);
