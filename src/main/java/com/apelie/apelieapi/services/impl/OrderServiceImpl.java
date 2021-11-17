@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
                 throw new NoSuchElementException("You have no items in your cart");
             }
 
-            MultiValuedMap<Store, OrderItem> itemMap = new ArrayListValuedHashMap<>();
+            MultiValuedMap<Long, OrderItem> itemMap = new ArrayListValuedHashMap<>();
             Map<Product, Integer> productQuantity = new HashMap<>();
             float totalValue = 0;
 
@@ -72,24 +72,26 @@ public class OrderServiceImpl implements OrderService {
                 orderItem.setProduct(cartItem.getProduct());
                 orderItem.setQuantity(cartItem.getQuantity());
 
-                itemMap.put(cartItem.getProduct().getStore(), orderItem);
+                itemMap.put(cartItem.getProduct().getStore().getStoreId(), orderItem);
                 Product product = cartItem.getProduct();
                 Integer quantity = productQuantity.containsKey(product) ? productQuantity.get(product) : 0;
                 quantity += orderItem.getQuantity();
                 productQuantity.put(product, quantity);
             }
 
-            for(Store store: itemMap.keys()) {
+            for(Long storeId: itemMap.keySet()) {
                 Order order = new Order();
-                order.setCreatedAt(LocalDateTime.now(ZoneOffset.UTC));
-                Set<OrderItem> itemList = new HashSet(itemMap.get(store));
+                Set<OrderItem> itemList = new HashSet(itemMap.get(storeId));
+                Store currentStore = itemList.stream().findFirst().get().getProduct().getStore();
+
                 order.setItemList(itemList);
                 order.setTotalValue(calculateTotalPrice(itemList));
                 order.setStatus(OrderStatus.AWAITING_PAYMENT);
-                order.setStore(store);
+                order.setStore(currentStore);
                 order.setUser(user);
                 order.setPaymentMethod(createOrderDto.getPaymentMethod());
                 order.setAddress(address);
+                order.setCreatedAt(LocalDateTime.now(ZoneOffset.UTC));
                 orderRepository.save(order);
                 orderList.add(order);
             }
