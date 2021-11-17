@@ -2,14 +2,11 @@ package com.apelie.apelieapi.services.impl;
 
 import com.amazonaws.util.CollectionUtils;
 import com.apelie.apelieapi.controllers.dto.product.CreateProductDTO;
-import com.apelie.apelieapi.exception.FileSizeException;
-import com.apelie.apelieapi.exception.FileTypeException;
 import com.apelie.apelieapi.mappers.ProductMapper;
 import com.apelie.apelieapi.models.Product;
 import com.apelie.apelieapi.models.ProductImage;
 import com.apelie.apelieapi.models.Store;
 import com.apelie.apelieapi.repositories.ProductRepository;
-import com.apelie.apelieapi.repositories.StoreRepository;
 import com.apelie.apelieapi.services.FileService;
 import com.apelie.apelieapi.services.ProductService;
 import com.apelie.apelieapi.services.StoreService;
@@ -19,10 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.security.AccessControlException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {

@@ -1,5 +1,6 @@
 package com.apelie.apelieapi.controllers.dto.order;
 
+import com.apelie.apelieapi.controllers.dto.address.AddressResponseDto;
 import com.apelie.apelieapi.controllers.dto.product.ProductResponseDTO;
 import com.apelie.apelieapi.controllers.dto.store_review.StoreReviewResponseDto;
 import com.apelie.apelieapi.controllers.dto.user.UserResponseDto;
@@ -28,6 +29,7 @@ public class OrderResponseDto {
     private OrderResponseDto.StoreResponseDto store;
     private List<OrderItemResponseDto> itemList;
     private StoreReviewResponseDto review;
+    private AddressResponseDto address;
 
     @Getter
     @Setter

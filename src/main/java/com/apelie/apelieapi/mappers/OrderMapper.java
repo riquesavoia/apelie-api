@@ -23,7 +23,8 @@ public class OrderMapper {
                 UserMapper.toDto(order.getUser(), false),
                 OrderMapper.toDto(order.getStore()),
                 order.getItemList().stream().map(OrderMapper::toDto).collect(Collectors.toList()),
-                StoreReviewMapper.toDto(order.getStoreReview())
+                StoreReviewMapper.toDto(order.getStoreReview()),
+                AddressMapper.toDto(order.getAddress())
         );
 
         return orderResponseDto;
