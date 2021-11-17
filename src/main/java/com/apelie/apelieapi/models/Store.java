@@ -69,7 +69,7 @@ public class Store {
     @Column(length = 60)
     private String street;
 
-    @Column(length = 25)
+    @Column(length = 50)
     private String city;
 
     @Column(length = 20)
@@ -87,7 +87,7 @@ public class Store {
     @Column(length = 10)
     private String addressNumber;
 
-    @Column(length = 50)
+    @Column(length = 100)
     private String neighbourhood;
 
     private Float rating;

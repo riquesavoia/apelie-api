@@ -71,7 +71,7 @@ public class CreateStoreDTO {
     @Size(max=10, message = "Address number must have at most 10 characters")
     private String addressNumber;
 
-    @Size(max=50, message = "Neighbourhood must have at most 10 characters")
+    @Size(max=100, message = "Neighbourhood must have at most 100 characters")
     private String neighbourhood;
 
     @Size(max=400, message = "Description must have at most 400 characters")
