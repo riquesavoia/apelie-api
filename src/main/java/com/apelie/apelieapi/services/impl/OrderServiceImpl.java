@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 
                 order.setItemList(itemList);
                 order.setTotalValue(calculateTotalPrice(itemList));
-                order.setStatus(OrderStatus.AWAITING_PAYMENT);
+                order.setStatus(OrderStatus.AWAITING_SHIPPING);
                 order.setStore(currentStore);
                 order.setUser(user);
                 order.setPaymentMethod(createOrderDto.getPaymentMethod());
@@ -159,6 +159,7 @@ public class OrderServiceImpl implements OrderService {
             throw new NoSuchElementException("Order does not belong to this store");
         }
 
+        order.setStatus(OrderStatus.FINISHED);
         order.setTrackingCode(trackingCode);
         orderRepository.save(order);
     }
