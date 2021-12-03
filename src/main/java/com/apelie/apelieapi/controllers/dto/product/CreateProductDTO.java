@@ -22,7 +22,7 @@ public class CreateProductDTO {
     @NotNull(message = "Price cannot be null")
     private float price;
 
-    @Size(max=200, message = "Description must have at most 200 characters")
+    @Size(max=275, message = "Description must have at most 275 characters")
     private String description;
 
     @NotNull(message = "Quantity cannot be null")
