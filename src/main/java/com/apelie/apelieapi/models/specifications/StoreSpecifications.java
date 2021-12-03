@@ -2,6 +2,7 @@ package com.apelie.apelieapi.models.specifications;
 
 import com.apelie.apelieapi.models.Store;
 import com.apelie.apelieapi.models.Store_;
+import com.apelie.apelieapi.models.User;
 import com.apelie.apelieapi.models.enums.StoreCategory;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -39,13 +40,13 @@ public class StoreSpecifications {
         });
     }
 
-    public static Specification<Store> belongsToUser(Long ownerId) {
-        if (ownerId == null) {
+    public static Specification<Store> doesNotBelongToUser(User user) {
+        if (user == null) {
             return null;
         }
 
         return ((root, query, criteriaBuilder) -> {
-            return criteriaBuilder.equal(root.join(Store_.OWNER).get("userId"), ownerId);
+            return criteriaBuilder.notEqual(root.join(Store_.OWNER).get("userId"), user.getUserId());
         });
     }
 

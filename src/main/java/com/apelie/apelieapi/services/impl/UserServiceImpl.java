@@ -57,8 +57,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getLoggedUser() {
         try {
-            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                return null;
+            }
 
+            String email = SecurityContextHolder.getContext().getAuthentication().getName();
             return userRepository.findByEmail(email);
         } catch (Exception e) {
             LOGGER.error("Error when getting logged user", e);

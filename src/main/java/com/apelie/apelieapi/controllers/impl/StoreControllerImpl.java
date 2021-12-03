@@ -13,10 +13,7 @@ import com.apelie.apelieapi.mappers.StoreMapper;
 import com.apelie.apelieapi.mappers.StoreReviewMapper;
 import com.apelie.apelieapi.models.Store;
 import com.apelie.apelieapi.models.enums.StoreCategory;
-import com.apelie.apelieapi.services.OrderService;
-import com.apelie.apelieapi.services.ProductService;
-import com.apelie.apelieapi.services.StoreReviewService;
-import com.apelie.apelieapi.services.StoreService;
+import com.apelie.apelieapi.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,15 +38,18 @@ public class StoreControllerImpl implements StoreController {
     @Autowired
     private StoreReviewService storeReviewService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
-    public List<StoreResponseDTO> getAllStores(String name, Float rating, List<StoreCategory> categories, Long ownerId) {
+    public List<StoreResponseDTO> getAllStores(String name, Float rating, List<StoreCategory> categories) {
         Specification<Store> specifications =
                 Specification.where(isNameLike(name))
                         .and(isRatingGreaterThan(rating))
                         .and(belongsToCategories(categories))
-                        .and(belongsToUser(ownerId))
                         .and(isDeleted(false))
-                        .and(hasProducts(true));
+                        .and(hasProducts(true))
+                        .and(doesNotBelongToUser(userService.getLoggedUser()));
 
         return storeService.getAllStores(specifications)
                 .stream()
