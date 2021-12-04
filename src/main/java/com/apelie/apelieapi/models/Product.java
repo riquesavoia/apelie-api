@@ -17,7 +17,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE product SET deleted = true WHERE product_id=?")
 public class Product {
 
     @Id
@@ -40,9 +39,8 @@ public class Product {
     @JoinColumn(name="store_id")
     private Store store;
 
-    @OneToMany(orphanRemoval = true)
+    @OneToMany
     @JoinColumn(name="product_id")
-    @Cascade(value={org.hibernate.annotations.CascadeType.ALL})
     @Fetch(FetchMode.JOIN)
     @OrderBy("product_image_id")
     private Set<ProductImage> images;

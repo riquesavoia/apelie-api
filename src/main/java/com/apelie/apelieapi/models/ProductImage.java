@@ -3,6 +3,7 @@ package com.apelie.apelieapi.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
 

@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
                 throw new AccessControlException("You don't have permission to remove this product");
             }
 
-            productRepository.delete(product);
+            productRepository.delete(productId);
         } catch (Exception e) {
             LOGGER.error("Error when trying to remove a product", e);
             throw e;
