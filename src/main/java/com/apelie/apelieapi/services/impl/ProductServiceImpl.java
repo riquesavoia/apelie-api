@@ -50,10 +50,6 @@ public class ProductServiceImpl implements ProductService {
             }
 
             productRepository.delete(product);
-
-            for (ProductImage image : product.getImages()) {
-                this.fileService.deleteImageByUrl(image.getUrl());
-            }
         } catch (Exception e) {
             LOGGER.error("Error when trying to remove a product", e);
             throw e;
